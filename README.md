@@ -1,4 +1,4 @@
-# nodeobsosc
+# Node-OBSosc
 ## Uses [Node.js](https://nodejs.org/) to control [OBS](https://obsproject.com/) via OSC protocol.
 ### Requires:
 

@@ -73,7 +73,7 @@ const oscOutPrefix = "/cue/"
 const oscOutSuffix = "/start"
 ```
 
-- Save and Run node-obs-osc.js `node node-obs-osc.js`
+- Save and Run node-obs-osc.js: `node node-obs-osc.js`
 
 ## Using Node-OBSosc
 

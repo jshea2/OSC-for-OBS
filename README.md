@@ -63,16 +63,6 @@ const oscClientIp = "127.0.0.1";
 const oscPortOut = 53000;
 ```
 
-
-- Configure the prefix and suffix for how you want your OSC application to recieve an OSC string from OBS
-
-
-(Ex. In OBS when "Wide" scene is activated, Qlab recieves an OSC message "/cue/Wide/start")
-```javascript
-const oscOutPrefix = "/cue/"
-const oscOutSuffix = "/start"
-```
-
 - Save and Run node-obs-osc.js: `node node-obs-osc.js`
 
 ## Using Node-OBSosc
@@ -128,6 +118,20 @@ Once you run node-obs-osc.js it will log IP and Port info, number of available s
 
 
 **/toggleStudioMode**  this message toggles Studio Mode on/off in OBS (_WARNING:_ This Command Has Caused Some Computers to Crash OBS)
+
+
+### OBS -> Application
+
+
+- Configure the prefix and suffix for how you want your OSC application to recieve an OSC string from OBS
+
+
+(Ex. In OBS when "Wide" scene is activated, Qlab recieves an OSC message "**/cue/Wide/start**")
+```javascript
+const oscOutPrefix = "/cue/"
+const oscOutSuffix = "/start"
+```
+
 
 
 

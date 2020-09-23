@@ -25,6 +25,7 @@ alt="IMAGE ALT TEXT HERE" width="300" height="150" border="10" /></a>
 - Install obs-websocket-js & node-osc: `npm install` (installs dependencies)
   
   
+  
   or install seperately
   - `npm install obs-websocket-js`
   - `npm install node-osc`

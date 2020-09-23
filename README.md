@@ -1,5 +1,5 @@
 # Node-OBSosc
-## Uses [Node.js](https://nodejs.org/) to control [OBS](https://obsproject.com/) via OSC protocol.
+## Uses [Node.js](https://nodejs.org/) to control [OBS](https://obsproject.com/) via OSC protocol and vice versa
 ### Requires:
 
 ### [OBS](https://obsproject.com/), [obs-websocket](https://github.com/Palakis/obs-websocket/releases), [Node.js](https://nodejs.org/), [obs-websocket-js](https://github.com/haganbmj/obs-websocket-js), & [node-osc](https://github.com/MylesBorins/node-osc).

@@ -1,0 +1,2 @@
+obs-websocket-js
+node-osc

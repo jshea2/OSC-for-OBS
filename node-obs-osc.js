@@ -1,4 +1,5 @@
 //NODE OBS-OSC
+//by Joe Shea
 
 //Get Modules and Setup
 const OBSWebSocket = require('obs-websocket-js');

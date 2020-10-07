@@ -22,7 +22,7 @@ alt="IMAGE ALT TEXT HERE" width="300" height="150" border="10" /></a>
 - Clone or Download this repository
 - Open it preferred source code editor (ex. [Visual Studio Code](https://code.visualstudio.com/download) or Terminal/Command Prompt)
 - Open code editor's Terminal
-- Install obs-websocket-js & node-osc: `npm install` (installs dependencies)
+- Install obs-websocket-js & node-osc: `npm install` (installs dependencies from 'package.json')
   
   
   

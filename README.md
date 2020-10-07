@@ -141,10 +141,7 @@ const oscOutSuffix = "/start"
 For Questions, Concerns, or Feature Requests
 
 
-Send me an email:
-
-
-joe.daniel.shea@gmail.com
+Send me an email: joe.daniel.shea@gmail.com
 
 
 

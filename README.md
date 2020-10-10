@@ -103,7 +103,7 @@ This can be used in any application that transmits and recieves OSC. This was ma
 **`/transition [name] [duration]`**  this message sets the desired transition and duration(in milliseconds).
 (Ex. "**/transition Cut**" will change the current Scene Transition to "Cut". "**/transition Fade 500**" will set the current Scene Transition to "Fade" with a "500" millisecond duration. If you do not set a duration in the 2nd argument it will keep the current duration and log it in node.
 
-### **- Change Source Visibility On/OFF: -**
+### **- Change Source Visibility On/Off: -**
 **`/[scene_name]/[source_name]/visible [0 or 1]`** this message will turn on or off the source's visibility. (Ex. "**/Webcam_1/Audio_Input_Capture/visible 0**" will turn OFF "Audio Input Capture" source in OBS from scene "Webcam 1". Where as "**/Webcam_1/Text_1/visible 1**" will turn it ON). **NOTE:** If a scene name or source name contains a SPACE, replace with "_", so if OBS has a scene "Webcam 1" and a source name of "Text 1" make OSC message the example from above.)
 
 ### **- Change Opacity: -**

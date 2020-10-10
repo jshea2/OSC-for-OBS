@@ -68,7 +68,9 @@ server.on('listening', () => {
 
 //OSC -> OBS
 server.on('message', (msg) => {
-  if (msg[0] === "/scene"){                                                 //When OSC Recieves a /scene do...
+    //Trigger Scene by Index Number
+  if (msg[0] === "/scene" && typeof msg[1] === 'number'){ 
+      console.log("number thing works")                                     //When OSC Recieves a /scene do...
       var oscMessage = msg[1] - 1;                                          //Convert Index Number to Start at 1
       var oscMessage = Math.floor(oscMessage);                              //Converts Any Float Argument to Lowest Integer
     return obs.send('GetSceneList').then(data => {                          //Request Scene List Array
@@ -79,7 +81,56 @@ server.on('message', (msg) => {
         }).catch(() => {
             console.log("Error: Out Of '/scene' Range");                    //Catch Error
         });
-    } else if (msg[0] === "/go"){                                           //When OSC Recieves a /go do...
+    } 
+
+    //Trigger Scene if Argument is a String and Contains a Space
+    else if (msg[0] === "/scene" && msg.length > 2){                      //When OSC Recieves a /scene do...                                       
+        var firstIndex = msg.shift();                                       //Removes First Index from 'msg' and Stores it to Another Variable
+        oscMultiArg = msg.join(' ')                                         //Converts 'msg' to a String with spaces
+      return obs.send('GetSceneList').then(data => {                        //Request Scene List Array
+          console.log(`OSC IN: ${firstIndex} ${oscMultiArg}`)
+          obs.send("SetCurrentScene", {
+              'scene-name': oscMultiArg                                     //Set to Scene from OSC
+              }).catch(() => {
+                console.log(`Error: There is no Scene "${oscMultiArg}" in OBS. Double check case sensitivity.`);
+              })
+          }).catch((err) => {
+              console.log(err)                                                            //Catch Error
+          });
+      } 
+      
+      //Trigger Scene if Argument is a String
+      else if (msg[0] === "/scene" && typeof msg[1] === 'string'){          //When OSC Recieves a /scene do...
+        var oscMessage = msg[1]; 
+      return obs.send('GetSceneList').then(data => {                         //Request Scene List Array
+          console.log(`OSC IN: ${msg[0]} ${oscMessage}`)
+          obs.send("SetCurrentScene", {
+              'scene-name': oscMessage                                       //Set to Scene from OSC
+              }).catch(() => {
+                console.log(`Error: There is no Scene "${msg[1]}" in OBS. Double check case sensitivity.`);
+              })
+          }).catch((err) => {
+              console.log(err)                                                            //Catch Error
+          });
+      } 
+
+      //Trigger Scene if Scene Name is in the OSC String
+      else if (msg[0].includes('/scene') && msg.length === 1){
+        var msgArray = msg[0].split("/")
+        msgArray.shift()
+        msgArray.shift()
+        obs.send("SetCurrentScene", {
+            'scene-name': msgArray[0].split("_").join(" ").toString(),                                          //Set to Scene from OSC
+            }).catch(() => {
+              console.log(`Error: There is no Scene "${msgArray}" in OBS. Double check case sensitivity.`);
+            }).catch((err) => {
+            console.log(err)                                                //Catch Error
+        });
+
+      }
+      
+      //Triggers to "GO" to the Next Scene
+      else if (msg[0] === "/go"){                                          //When OSC Recieves a /go do...
             
         return obs.send('GetSceneList').then(data => {                      //Request Scene List Array
             
@@ -98,10 +149,13 @@ server.on('message', (msg) => {
                     })   
                 }
         }).catch(() => {
-            console.log("Error: Invalid OSC Message");                      //Catch Error
+            console.log("Error: Invalid OSC Message");                              //Catch Error
             });
         })
-    } else if (msg[0] === "/back"){                                         //Same Concept as Above Except Going to the Previous Scene
+    } 
+    
+    //Triggers Previous Scene to go "BACK"
+    else if (msg[0] === "/back"){                                                 //Same Concept as Above Except Going to the Previous Scene
 
         return obs.send('GetSceneList').then(data => {
             
@@ -125,45 +179,184 @@ server.on('message', (msg) => {
         })
 
 
-    } else if (msg[0] === "/startRecording"){
-        obs.send("StartRecording")
+    } 
+    //Triggers Start Recording
+    else if (msg[0] === "/startRecording"){
+        obs.send("StartRecording").catch((err) => {
+            console.log(`ERROR: ${err.error}`)
+        })
     
-    } else if (msg[0] === "/stopRecording"){
-        obs.send("StopRecording")
+    } 
+    //Triggers Stop Recording
+    else if (msg[0] === "/stopRecording"){
+        obs.send("StopRecording").catch((err) => {
+            console.log(`ERROR: ${err.error}`)
+        })
     
-    } else if (msg[0] === "/toggleRecording"){
-        obs.send("StartStopRecording")
+    } 
+    //Triggers Toggle Recording
+    else if (msg[0] === "/toggleRecording"){
+        obs.send("StartStopRecording").catch((err) => {
+            console.log(`ERROR: ${err.error}`)
+        })
     
-    } else if (msg[0] === "/startStreaming"){
-        obs.send("StartStreaming")
+    } 
+    //Triggers Start Streaming
+    else if (msg[0] === "/startStreaming"){
+        obs.send("StartStreaming").catch((err) => {
+            console.log(`ERROR: ${err.error}`)
+        })
     
-    } else if (msg[0] === "/stopStreaming"){
-        obs.send("StopStreaming")
+    } 
+    //Triggers Stop Streaming
+    else if (msg[0] === "/stopStreaming"){
+        obs.send("StopStreaming").catch((err) => {
+            console.log(`ERROR: ${err.error}`)
+        })
     
-    } else if (msg[0] === "/toggleStreaming"){
-        obs.send("StartStopStreaming")
+    } 
+    //Triggers Toggle Streaming
+    else if (msg[0] === "/toggleStreaming"){
+        obs.send("StartStopStreaming").catch((err) => {
+            console.log(`ERROR: ${err.error}`)
+        })
     
-    } else if (msg[0] === "/pauseRecording"){
-        obs.send("PauseRecording")
+    } 
+    //Triggers Pause Recording
+    else if (msg[0] === "/pauseRecording"){
+        obs.send("PauseRecording").catch((err) => {
+            console.log(`ERROR: ${err.error}`)
+        })
     
-    } else if (msg[0] === "/resumeRecording"){
-        obs.send("ResumeRecording")
+    } 
+    //Triggers Resume Recording
+    else if (msg[0] === "/resumeRecording"){
+        obs.send("ResumeRecording").catch((err) => {
+            console.log(`ERROR: ${err.error}`)
+        })
     
-    } else if (msg[0] === "/enableStudioMode"){
-        obs.send("EnableStudioMode")
+    } 
+    //Triggers Enable Studio Mode
+    else if (msg[0] === "/enableStudioMode"){
+        obs.send("EnableStudioMode").catch((err) => {
+            console.log(`ERROR: ${err.error}`)
+        })
     
-    } else if (msg[0] === "/disableStudioMode"){
-        obs.send("DisableStudioMode")
+    } 
+    //Triggers Disable Studio Mode
+    else if (msg[0] === "/disableStudioMode"){
+        obs.send("DisableStudioMode").catch((err) => {
+            console.log(`ERROR: ${err.error}`);
+        })
     
-    } else if (msg[0] === "/toggleStudioMode"){
-        obs.send("ToggleStudioMode")
+    } 
+    //Triggers Toggle Studio Mode
+    else if (msg[0] === "/toggleStudioMode"){
+        obs.send("ToggleStudioMode").catch((err) => {
+            console.log(err)
+        })
     
+    } 
+    //Triggers Source Visibility On/Off
+    else if (msg[0].includes('visible')){
+        console.log(`OSC IN: ${msg}`)
+        var msgArray = msg[0].split("/")
+        msgArray.shift()
+        var visible;
+        if(msg[1] === 0 || msg[1] === 'off'){
+            visible = false
+        } else if(msg[1] === 1 || msg[1] === 'on'){
+            visible = true
+        }
+        obs.send("SetSceneItemProperties", {
+            'scene-name': msgArray[0].split('_').join(' ').toString(),
+            'item': msgArray[1].split('_').join(' ').toString(),
+            'visible': visible,
+        }).catch(() => {
+            console.log("Error: Invalid Syntax. Make Sure There Are NO SPACES in Scene Name and Source Name. /[Scene Name]/[Source Name]/visible 0 or 1, example: /Wide/VOX/visible 1")
+        })
+    } 
+    //Triggers the Source Opacity (via Filter > Color Correction)
+    else if (msg[0].includes('opacity')){
+        console.log(`OSC IN: ${msg[0]} ${msg[1]}`)
+        var msgArray = msg[0].split("/")
+        msgArray.shift()
+        obs.send("SetSourceFilterSettings", {
+           'sourceName': msgArray[0].split('_').join(' '),
+           'filterName': msgArray[1].split('_').join(' '),
+           'filterSettings': {'opacity' : msg[1]*100}
+        }).catch(() => {
+            console.log("ERROR: Opacity Command Syntax is Incorrect. Refer to Node OBSosc Github for Reference")
+        })  
     }
 
+    //Set Transition Type and Duration
+    else if (msg[0] === '/transition'){
+        if (msg[1] === "Cut" || msg[1] === "Stinger") {
+            console.log(`OSC IN: ${msg[0]} ${msg[1]}`)
+            obs.send("SetCurrentTransition", {
+                'transition-name': msg[1].toString()
+            }).catch(() => {
+                console.log("Whoops")
+            })
+        } else if(msg[1] === "Fade" || msg[1] === "Move" || msg[1] === "Luma_Wipe" || msg[1] === "Fade_to_Color" || msg[1] === "Slide" || msg[1] === "Swipe"){
+            if (msg[2] === undefined){
+                obs.send("GetTransitionDuration").then(data => {
+                    var tranisionTime = data["transition-duration"]
+                    console.log(`OSC IN: ${msg[0]} ${msg[1]}\nCurrent Duration: ${tranisionTime}`)
+                })
+            } else {
+            console.log(`OSC IN: ${msg[0]} ${msg[1]} ${msg[2]}`)
+            }
+            var makeSpace = msg[1].split('_').join(' ');
+        obs.send("SetCurrentTransition", {
+            'transition-name': makeSpace.toString()
+        })
+        if(msg.length === 3){
+        obs.send("SetTransitionDuration", {
+            'duration': msg[2]
+        })}
+        } else {
+            console.log("ERROR: Invalid Transition Name. It's Case Sensitive. Or if it contains SPACES use '_' instead")
+        } 
+        
+    } 
+    
+    //Source Position Translate
+    else if (msg[0].includes('position')){
+        console.log(`OSC IN: ${msg}`)
+        var msgArray = msg[0].split("/")
+        msgArray.shift()
+        var x = msg[1] + 960
+        var y = msg[2] - (msg[2] * 2)
+        obs.send("SetSceneItemProperties", {
+            'scene-name': msgArray[0].toString().split('_').join(' '),
+            'item': msgArray[1].toString().split('_').join(' '),
+            'position': { 'x': x, 'y': y + 540, 'alignment': 0}
+        }).catch(() => {
+            console.log("ERROR: Invalis Position Syntax")
+        })
+    }
 
+    //Source Scale Translate
+    else if (msg[0].includes('scale')){
+        console.log(`OSC IN: ${msg}`)
+        var msgArray = msg[0].split("/")
+        msgArray.shift()
+        var visible;
+        obs.send("SetSceneItemProperties", {
+            'scene-name': msgArray[0].split('_').join(' ').toString(),
+            'item': msgArray[1].split('_').join(' ').toString(),
+            'scale': { 'x': msg[1], 'y': msg[1]}
+        }).catch(() => {
+            console.log("Error: Invalid Scale Syntax. Make Sure There Are NO SPACES in Scene Name and Source Name. /[Scene Name]/[Source Name]/visible 0 or 1, example: /Wide/VOX/visible 1")
+        })
+    } 
 
-
-
+    //Log Error
+    else {
+        console.log("Error: Invalid OSC command. Please refer to Node OBSosc on Github for Command List")
+    }
 });
 
 //OBS -> OSC Client (OUT)

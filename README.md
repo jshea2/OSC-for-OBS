@@ -71,7 +71,7 @@ Once you run node-obs-osc.js it will log IP and Port info, number of available s
 
 ### Application -> OBS 
 
-This can be used in any application that transmits and recieves OSC. This was mainly designed for Qlab, so to get started with examples of all the OSC commands below do the following: 
+This can be used in any application that transmits and recieves OSC. This was mainly designed for Qlab, so to get started with examples of all the OSC commands below; do the following: 
 
 - Download the "Examples" folder where you'll find "OBS Scene Collection Example.json" and "Qlab OSC Examples.qlab4".
 - *Import* "OBS Scene Collection Example.json" into OBS from the *Scene Collection* tab.

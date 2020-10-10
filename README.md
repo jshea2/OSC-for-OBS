@@ -12,7 +12,7 @@ Example Video using Qlab to OBS and also OBS to Qlab via OSC:
 
 <a href="https://youtu.be/Cpwnjzxs-WM
 " target="_blank"><img src="http://img.youtube.com/vi/Cpwnjzxs-WM/0.jpg" 
-alt="Node-OSBosc Example Video" width="300" height="150" border="10" /></a>
+alt="Node-OSBosc Example Video" width="300" height="180" border="10" /></a>
 #
 ## Installation and Setup:
 

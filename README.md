@@ -170,7 +170,7 @@ const oscOutSuffix = "/start"
 ### This was inspired by the Python version: [ObSC](https://github.com/CarloCattano/ObSC?fbclid=IwAR1zGJ_iFVq9o887hWw71lWaGZKqdAP0mMaVFyXau9x0sDgs-5KjS9HNLrk)
 
 
-For Questions, Concerns, or Feature Requests
+For Questions, Bugs, or Feature Requests
 
 
 Send me an email: joe.daniel.shea@gmail.com

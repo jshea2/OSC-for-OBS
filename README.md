@@ -35,10 +35,10 @@ alt="Node-OSBosc Example Video" width="300" height="180" border="10" /></a>
   (Use `sudo` if on Mac)
  
  
- - In file 'node-obsosc.js' change config info
+ - In file 'node-obsosc.js' change config info.
  
   
-- Configure this to match your OBS Websocket plugin.
+  Configure this to match your OBS Websocket plugin:
 
 ``` javascript
 //OBS Config
@@ -48,7 +48,7 @@ const obsPassword = "secret"
 ```
 
 
-- Configure your OSC application to send to this IP and Port (Node recieves OSC Messages on this IP and Port and Converts to OBS Websocket)
+Configure your OSC application to send to this IP and Port (Node recieves OSC Messages on this IP and Port and Converts to OBS Websocket):
 ``` javascript
 //OSC Server (IN) Config
 const oscServerIp = "127.0.0.1";
@@ -56,7 +56,7 @@ const oscPortIn = 3333;
 ```
 
 
-- Configure your OSC application to listen on this IP and Port (OBS Websocket sends to Node, then sends OSC Messages to this IP and Port)
+Configure your OSC application to listen on this IP and Port (OBS Websocket sends to Node, then sends OSC Messages to this IP and Port):
 ```javascript
 //OSC Client (OUT) Config
 const oscClientIp = "127.0.0.1";

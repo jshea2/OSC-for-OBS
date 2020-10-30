@@ -21,6 +21,10 @@ alt="Node-OBSosc Example Video" width="300" height="180" border="10" /></a>
 - Download and Install [Node.js](https://nodejs.org/)
 - Clone or Download this repository
 - Open it preferred source code editor (ex. [Visual Studio Code](https://code.visualstudio.com/download) or Terminal/Command Prompt)
+  - If you use Visual Studio Code...
+  - Go to "View > Command Palette..."
+  -  Type "Git: Clone" [Enter]
+  -  Paste the Github Clone HTTPS URL. (This is the same as the URL just with ".git" added to the end)
 - Open code editor's Terminal
 - Install obs-websocket-js & node-osc: `npm install` (installs dependencies from 'package.json')
   

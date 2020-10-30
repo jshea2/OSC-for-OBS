@@ -12,7 +12,7 @@ Example Video using Qlab to OBS and also OBS to Qlab via OSC:
 
 <a href="https://youtu.be/Cpwnjzxs-WM
 " target="_blank"><img src="http://img.youtube.com/vi/Cpwnjzxs-WM/0.jpg" 
-alt="Node-OSBosc Example Video" width="300" height="180" border="10" /></a>
+alt="Node-OBSosc Example Video" width="300" height="180" border="10" /></a>
 #
 ## Installation and Setup:
 
@@ -35,7 +35,7 @@ alt="Node-OSBosc Example Video" width="300" height="180" border="10" /></a>
   (Use `sudo` if on Mac)
  
  
- - In file 'node-obsosc.js' change config info.
+ - In file 'Node-OBSosc.js' change config info.
  
   
   Configure this to match your OBS Websocket plugin:
@@ -63,11 +63,18 @@ const oscClientIp = "127.0.0.1";
 const oscPortOut = 53000;
 ```
 
-- Save and Run node-obs-osc.js: `node node-obs-osc.js`
+- Save file, then Run "Node-OBSosc.js" in Terminal: 
+    
+    `node Node-OBSosc.js` 
+
+
+  or  
+
+  `npm start`
 #
 ## Using Node-OBSosc
 
-Once you run node-obs-osc.js it will log IP and Port info, number of available scenes, and a list of all scenes with numbers, this is what you use as an argument in your **/scene** OSC message.
+Once you run "Node-OBSosc.js" it will log IP and Port info, number of available scenes, and a list of all scenes with numbers, this is what you use as an argument in your **/scene** OSC message.
 
 ### Application -> OBS 
 

@@ -1,4 +1,4 @@
-//NODE OBS-OSC
+//NODE-OBSosc
 //by Joe Shea
 
 //Get Modules and Setup

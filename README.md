@@ -20,7 +20,7 @@ alt="Node-OBSosc Example Video" width="300" height="180" border="10" /></a>
 - Download and Install [obs-websocket](https://github.com/Palakis/obs-websocket/releases) plugin
 - Download and Install [Node.js](https://nodejs.org/)
 - Clone or Download this repository
-- Open it preferred source code editor (ex. [Visual Studio Code](https://code.visualstudio.com/download) or Terminal/Command Prompt)
+- Open in preferred source code editor (ex. [Visual Studio Code](https://code.visualstudio.com/download) or Terminal/Command Prompt)
   - If you use Visual Studio Code...
   - Go to "View > Command Palette..."
   -  Type "Git: Clone" [Enter]

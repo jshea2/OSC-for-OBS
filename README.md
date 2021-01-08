@@ -163,8 +163,15 @@ This can be used in any application that transmits and recieves OSC. This was ma
 **`/toggleStudioMode`**  this message toggles Studio Mode on/off in OBS (_WARNING:_ This Command Has Caused Some Computers to Crash OBS)
 
 #
-## OBS -> Application
+## OBS -> Application:
 
+This allows OBS to send OSC to other applications when a scene is activated. 
+
+To **use/enable** this function, change the variable from 'false' to 'true' in the following code (on line 23):
+``` javascript
+//Enable OBS -> App Control
+const enableObs2App = false
+```
 
 - Configure the prefix and suffix for how you want your OSC application to recieve an OSC string from OBS
 
@@ -175,16 +182,34 @@ const oscOutPrefix = "/cue/"
 const oscOutSuffix = "/start"
 ```
 
+## TouchOSC Control:
+<img src="Qlab, OBS, TouchOSC Examples/IMG_33356C1DCEE1-1.jpeg" style="500px;">
+
+ Manually moving around and scaling source's in OBS isn't the quickest or most accurate. This TouchOSC layout is made to quickly edit source's alignment, scale, position, transition type, and transition duration.
+ 
+ *The .touchosc file is included with this repository.*
+
+### To Connect:
+
+- Set TouchOSC device's WiFi to same network as machine running Node-OBSosc.js 
+- Set TouchOSC's 'Host' to match machine's IP. 
+- Port (outgoing) should be '3333' or whatever you configured this line of code to:
+``` javascript
+//OSC Server (IN) Config
+const oscServerIp = "127.0.0.1";
+const oscPortIn = 3333;
+```
+### To Use:
+- For alignment, scale, and position to work you MUST have the scene-item/source SELECTED in OBS
+- For transition type and duration, it will only update the scene you are currently in. NOTE: This only changes the "Transition Override" NOT the global transition.
+- To use the "Move" transition please [Download](https://obsproject.com/forum/resources/move-transition.913/)  and install the 'move Transtion' plug-in
 
 
 
 ### This was inspired by the Python version: [ObSC](https://github.com/CarloCattano/ObSC?fbclid=IwAR1zGJ_iFVq9o887hWw71lWaGZKqdAP0mMaVFyXau9x0sDgs-5KjS9HNLrk)
 
 
-For Questions, Bugs, or Feature Requests
-
-
-Send me an email: joe.daniel.shea@gmail.com
-
+Feel free to send me an email for any questions: 
+joe.daniel.shea@gmail.com
 
 

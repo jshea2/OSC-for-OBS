@@ -19,6 +19,8 @@ const oscClientIp = "127.0.0.1";
 const oscPortOut = 53000;
 const oscOutPrefix = "/cue/"
 const oscOutSuffix = "/start"
+//Enable OBS -> App Control
+const enableObs2App = false
 
 
 //Connect to OBS
@@ -28,7 +30,6 @@ obs.connect({
     })
     .then(() => {
         console.log(`\nConnected & authenticated to OBS Websockets...\nIP: ${obsIp}\nPort: ` + obsPort);
-
         return obs.send('GetSceneList');                                    //Send a Get Scene List Promise
     })
     .then(data => {
@@ -276,6 +277,27 @@ server.on('message', (msg) => {
             console.log("Error: Invalid Syntax. Make Sure There Are NO SPACES in Scene Name and Source Name. /[Scene Name]/[Source Name]/visible 0 or 1, example: /Wide/VOX/visible 1")
         })
     } 
+
+    //Triggers Filter Visibility On/Off
+    else if (msg[0].includes('filterVisibility')){
+        console.log(`OSC IN: ${msg}`)
+        var msgArray = msg[0].split("/")
+        msgArray.shift()
+        var visiblef;
+        if(msg[1] === 0 || msg[1] === 'off'){
+            visiblef = false
+        } else if(msg[1] === 1 || msg[1] === 'on'){
+            visiblef = true
+        }
+        obs.send("SetSourceFilterVisibility", {
+            'sourceName': msgArray[0].split('_').join(' '),
+            'filterName': msgArray[1].split('_').join(' '),
+            'filterEnabled': visiblef
+        }).catch(() => {
+            console.log("Error: Invalid Syntax. Make Sure There Are NO SPACES in Source Name and Filter name. /[Scene Name]/[Source Name]/visible 0 or 1, example: /Wide/VOX/visible 1")
+        })
+    } 
+
     //Triggers the Source Opacity (via Filter > Color Correction)
     else if (msg[0].includes('opacity')){
         console.log(`OSC IN: ${msg[0]} ${msg[1]}`)
@@ -332,7 +354,7 @@ server.on('message', (msg) => {
         obs.send("SetSceneItemProperties", {
             'scene-name': msgArray[0].toString().split('_').join(' '),
             'item': msgArray[1].toString().split('_').join(' '),
-            'position': { 'x': x, 'y': y + 540, 'alignment': 0}
+            'position': { 'x': x, 'y': y + 540}
         }).catch(() => {
             console.log("ERROR: Invalis Position Syntax")
         })
@@ -353,6 +375,142 @@ server.on('message', (msg) => {
         })
     } 
 
+        //Source Rotation Translate
+        else if (msg[0].includes('rotate')){
+            console.log(`OSC IN: ${msg}`)
+            var msgArray = msg[0].split("/")
+            msgArray.shift()
+            obs.send("SetSceneItemProperties", {
+                'scene-name': msgArray[0].split('_').join(' ').toString(),
+                'item': msgArray[1].split('_').join(' ').toString(),
+                'rotation': msg[1]
+            }).catch(() => {
+                console.log("Error: Invalid Rotation Syntax. Make Sure There Are NO SPACES in Scene Name and Source Name. /[Scene Name]/[Source Name]/rotate 0 or 1, example: /Wide/VOX/rotate 1")
+            })
+        } 
+
+    // ----- TouchOSC COMMANDS: ------
+
+    //Source Position Select Move
+    else if (msg[0] === '/move'){
+        return obs.send("GetCurrentScene").then(data => {
+        console.log(`OSC IN: ${msg}`)
+        var msgArray = msg[0].split("/")
+        msgArray.shift()
+        var x = Math.floor((msg[2]*2000))
+        var y = Math.floor((msg[1]*2000) + 960)
+        console.log(x + " " + y)
+        obs.send("SetSceneItemProperties", {
+            'scene-name': data.name,
+            'item': currentSceneItem,
+            'position': { 'x': x + 540, 'y': y, 'alignment': 0}
+        }).catch(() => {
+            console.log("ERROR: Invalis Position Syntax")
+        })
+    })
+    }
+
+        //Source Position Select MoveX
+        else if (msg[0] === '/movex'){
+            return obs.send("GetCurrentScene").then(data => {
+            console.log(`OSC IN: ${msg}`)
+            var msgArray = msg[0].split("/")
+            msgArray.shift()
+            var x = Math.floor((msg[1]*2000))
+            var y = Math.floor((msg[1]*2000) + 960)
+            console.log(x + " " + y)
+            obs.send("SetSceneItemProperties", {
+                'scene-name': data.name,
+                'item': currentSceneItem,
+                'position': { 'x': x + 540, 'alignment': 0}
+            }).catch(() => {
+                console.log("ERROR: Invalis Position Syntax")
+            })
+        })
+        }
+
+        //Source Position Select MoveY
+        else if (msg[0] === '/movey'){
+            return obs.send("GetCurrentScene").then(data => {
+            console.log(`OSC IN: ${msg}`)
+            var msgArray = msg[0].split("/")
+            msgArray.shift()
+            var x = Math.floor((msg[2]*2000))
+            var y = Math.floor((msg[1]*2000) + 960)
+            console.log(x + " " + y)
+            obs.send("SetSceneItemProperties", {
+                'scene-name': data.name,
+                'item': currentSceneItem,
+                'position': { 'y': y, 'alignment': 0}
+            }).catch(() => {
+                console.log("ERROR: Invalis Position Syntax")
+            })
+        })
+        }
+
+        
+    //Source Align
+    else if (msg[0] === '/align'){
+        return obs.send("GetCurrentScene").then(data => {
+        console.log(`OSC IN: ${msg}`)
+        var x = 0 + 960
+        var y = 0 + 540
+        obs.send("SetSceneItemProperties", {
+            'scene-name': data.name.toString(),
+            'item': currentSceneItem,
+            'position': {'x': x, 'y':y, 'alignment': msg[1]}
+        }).catch(() => {
+            console.log("Error: Select A Scene Item in OBS for Alignment")
+        })
+    })
+    }
+
+    //Set Transition Override
+    else if(msg[0].includes('/transOverrideType')){
+        console.log(`OSC IN: ${msg}`)
+        var msgArray = msg[0].split("/")
+        msgArray.shift()
+        console.log("Messge array: " + msgArray)
+        return obs.send("GetCurrentScene").then(data => {
+        obs.send("SetSceneTransitionOverride", {
+            'sceneName': data.name,
+            'transitionName': msgArray[1].toString(),
+        })
+    })
+    }
+
+    //Set Transition Override
+    else if(msg[0] === '/transOverrideDuration'){
+        let currentSceneName
+        console.log(`OSC IN: ${msg}`)
+        return obs.send("GetCurrentScene").then(data => {
+            currentSceneName = data.name
+        return obs.send("GetSceneTransitionOverride", {
+            'sceneName': currentSceneName
+        }).then(data => {
+            obs.send("SetSceneTransitionOverride", {
+                'sceneName': currentSceneName,
+                'transitionName': data.transitionName,
+                'transitionDuration': Math.floor(msg[1])
+            })
+        })
+        })
+    }
+
+    //Source Size
+    else if (msg[0] === '/size'){
+        return obs.send("GetCurrentScene").then(data => {
+        console.log(`OSC IN: ${msg}`)
+        obs.send("SetSceneItemProperties", {
+            'scene-name': data.name.toString(),
+            'item': currentSceneItem,
+            'scale': {'x': msg[1], 'y': msg[1]}
+        }).catch(() => {
+            console.log("Error: Select A Scene Item in OBS for Size")
+        })
+    })
+    }
+
     //Log Error
     else {
         console.log("Error: Invalid OSC command. Please refer to Node OBSosc on Github for Command List")
@@ -361,8 +519,10 @@ server.on('message', (msg) => {
 
 //OBS -> OSC Client (OUT)
 obs.on('SwitchScenes', data => {
+    if (enableObs2App){
     client.send(`${oscOutPrefix}${data.sceneName}${oscOutSuffix}`, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
         if (err) console.error(err);
-      });
+            });
+        }
     })
 

@@ -117,6 +117,9 @@ This can be used in any application that transmits and recieves OSC. This was ma
 ### **- Change Source Visibility On/Off: -**
 **`/[scene_name]/[source_name]/visible [0 or 1]`** this message will turn on or off the source's visibility. (Ex. "**/Webcam_1/Audio_Input_Capture/visible 0**" will turn OFF "Audio Input Capture" source in OBS from scene "Webcam 1". Where as "**/Webcam_1/Text_1/visible 1**" will turn it ON). **NOTE:** If a scene name or source name contains a SPACE, replace with "_", so if OBS has a scene "Webcam 1" and a source name of "Text 1" make OSC message the example from above.)
 
+### **- Change Filter Visibility On/Off: -**
+**`/[scene_name]/[source_name]/filterVisibility [0 or 1]`** this message will turn on or off the source's filter visibility. (Ex. "**/Video_Input/Color_Correction/filterVisibiltity 0**" will turn OFF "Color Correction" filter in OBS from source "Video Input". Where as "**/Video_Input/Color_Correction/filterVisibility 1**" will turn it ON). **NOTE:** If a filter name or source name contains a SPACE, replace with "_", so if OBS has a filter "Color Correction" and a source name of "Video Input" make OSC message the example from above.)
+
 ### **- Change Opacity: -**
 **`/[source_name]/[color_correction_filter_name]/opacity [0 thru 1]`** this message allows you to adjust the Opacity of a source via the "Color Correction" filter in OBS of the current scene. (Ex. "**/Text_1/Color_Correction 0.5**" will make "Text 1" half transparent. **NOTE:** If a source name or filter name contains a SPACE, replace with "_", so if OBS has a source "Text 1" and filter "Color Correction" make OSC message the example from above)
 
@@ -125,6 +128,9 @@ This can be used in any application that transmits and recieves OSC. This was ma
 
 ### **- Translate Source's Scale: -**
 **`/[scene_name]/[source_name]/scale [float]`** this allows you to change the source's scale. "0" is nothing, "1" is original full size. Negative numbers will invert the source. Numbers larger than "1" will be larger than original size. (Ex. **/Webcam_1/Text_1/scale 2** this will make the size of the "Text 1" source twice as large. See "Qlab OSC Examples" file for how to automate scale. Also, If a scene name or source name contains a SPACE, replace with "_", so if OBS has a scene "Webcam 1" and a source name of "Text 1" make OSC message the example from above.)
+
+### **- Translate Source's Rotation: -**
+**`/[scene_name]/[source_name]/rotate [float]`** this allows you to change the source's scale. "0" is nothing, "360" is full 360 rotation clockwise. Negative numbers will rotate counterclockwise. Numbers larger than "360" will be more roations. (Ex. **/Webcam_1/Text_1/rotate 90** this will make the rotation of the "Text 1" source 90º clockwise. See "Qlab OSC Examples" file for how to automate rotation. Also, If a scene name or source name contains a SPACE, replace with "_", so if OBS has a scene "Webcam 1" and a source name of "Text 1" make OSC message the example from above.)
 
 ### **- Streaming and Recording: -**
 

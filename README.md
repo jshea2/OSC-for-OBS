@@ -215,7 +215,9 @@ const oscPortIn = 3333;
 ### This was inspired by the Python version: [ObSC](https://github.com/CarloCattano/ObSC?fbclid=IwAR1zGJ_iFVq9o887hWw71lWaGZKqdAP0mMaVFyXau9x0sDgs-5KjS9HNLrk)
 
 
-Feel free to send me an email for any questions: 
-joe.daniel.shea@gmail.com
+Join the Discord server to chat: 
 
+<a href="https://discord.gg/FJ79AKPgSk">
+        <img src="https://img.shields.io/discord/308323056592486420?logo=discord"
+            alt="chat on Discord"></a>
 

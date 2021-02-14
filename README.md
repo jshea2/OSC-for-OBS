@@ -3,6 +3,7 @@
 
 ![Node-OBSoscsmall](https://user-images.githubusercontent.com/70780576/105978317-41ee1a80-6047-11eb-8765-1837aa1b801c.png)
 ## [Standalone *"OBSosc App 2.0"* Now Available](https://github.com/jshea2/Node-OBSosc/releases/tag/v2.0)
+#### *Click or go to Releases*
 
 ### Requires:
 

@@ -367,4 +367,6 @@ Configure the prefix and suffix for how you want your OSC application to receive
 <a href="https://discord.gg/FJ79AKPgSk">
         <img src="https://img.shields.io/discord/308323056592486420?logo=discord"
             alt="chat on Discord"></a>
+           
+## [Download OBSosc 2.0 Now](https://github.com/jshea2/OBSosc/releases/tag/2.0)           
 

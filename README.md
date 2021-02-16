@@ -1,7 +1,6 @@
 # OBSosc
 #### Control and listen to [OBS](https://obsproject.com/) via OSC protocol
 
-# OBSosc (v2.0)
 ![Node-OBSoscsmall](https://user-images.githubusercontent.com/70780576/105978317-41ee1a80-6047-11eb-8765-1837aa1b801c.png)
 ## Setup
 *Requires: [obs-websocket plugin](https://github.com/Palakis/obs-websocket/releases) for OBS*

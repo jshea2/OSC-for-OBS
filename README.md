@@ -358,7 +358,7 @@ Configure the prefix and suffix for how you want your OSC application to receive
   - *Example:* In OBS when a Scene named "Wide" is activated, Qlab recieves an OSC message "**/cue/Wide/start**")
   - *Note:* This currently does NOT support any spaces.
 #
-# Support The Project <3
+# Support The Project ❤️
 ### If OBSosc helped you, consider helping the project by making a one time donation via **[PayPal](http://paypal.me/joeshea2)**
 
 #

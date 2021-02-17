@@ -362,7 +362,7 @@ Configure the prefix and suffix for how you want your OSC application to receive
 ### If OBSosc helped you, consider helping the project by making a one time donation via **[PayPal](http://paypal.me/joeshea2)**
 
 #
-# Join the Discord Community
+## Join the Discord Community
 
 <a href="https://discord.gg/FJ79AKPgSk">
         <img src="https://img.shields.io/discord/308323056592486420?logo=discord"

@@ -16,11 +16,16 @@
 - In the "Console" tab it will log IP and Port info, the number of available scenes, and a list of all scenes with numbers 
   - This can be used as an index argument in your **/scene** OSC message
 - To save a config file with "Save As" please "Connect" first
+- When you close OBSosc it will save your configuration for when you open next
+- There is an option in 'File > Automatically Connect on Startup' that if enabled will automatically connect on opening OBSosc
 
 ## Application OSC -> OBSosc 
 
 - In your OSC Application (QLab for example) patch your targeted OSC to match the "OSC IN" inputs on OBSosc.
   - default is... IP: `127.0.0.1`, Port: `3333`
+- **DO NOT** Use UNDERSCORES in OBS. Only use them in your OSC Address. So, If your OBS Scene or Source name contains a SPACE, then in your OSC message replace the SPACE with an UNDERSCORE.
+  - *Example:* if OBS Scene name is `Scene 1`, then your OSC address should use `Scene_1`.
+    - *Note:* If OBS names contain UNDERSCORES this will not work. 
 - OBSosc can be used for any application that transmits and/or receives unbundled OSC. 
   - This was designed with QLab, so the example show file of all the OSC commands is available in Assets on the Github or in the downloaded folder: "Qlab OBSosc Examples.qlab4" 
     - **Note:** Sending OSC Commands requires a paid version of Qlab.
@@ -71,17 +76,27 @@
 #
 ## **- Set Source Visibility On/Off: -**
 #
-**`/[scene_name]/[source_name]/visible [0 or 1]`** 
+**`/[scene_name]/[source_name]/visible [0, off, false or 1, on, true]`** 
 - turn on or off the source's visibility. 
   - *Example:* `/Webcam_1/Audio_Input_Capture/visible 0` will turn OFF "Audio Input Capture" source in OBS from scene "Webcam 1". Where as `/Webcam_1/Text_1/visible 1` will turn it ON. 
   - *NOTE:* If a scene name or source name contains a SPACE, replace with "_", so if OBS has a scene "Webcam 1" and a source name of "Text 1" make OSC message the example from above.
 #
 ## **- Set Filter Visibility On/Off: -**
 #
-**`/[scene_name]/[source_name]/filterVisibility [0 or 1]`** 
+**`/[scene_name]/[source_name]/filterVisibility [0, off, false or 1, on, true]`** 
 - turn on or off the source's filter visibility.
   -  *Example:* `/Video_Input/Color_Correction/filterVisibiltity 0` will turn OFF filter named "Color Correction" in OBS from source "Video Input". Where as `/Video_Input/Color_Correction/filterVisibility 1` will turn it ON. 
   - *Note:* If a filter name or source name contains a SPACE, replace with "_", so if OBS has a filter "Color Correction" and a source name of "Video Input" make OSC message the example from above.
+
+#
+## **- Set Text: -**
+#
+**`/[source_name] [text content] [size(optional)] [font (optional)]`**
+- change text content, size, and font.
+  - *Note:* Size and Font are optional
+  - *Example:* `/text_1 "Hello World."` will change the text contents of source "text 1" to "Hello World."
+  - *Example 2:* `/text_1 "Hello World." 150 Arial` will change the same as above and change the size to 150 pt and Font to 'Arial'
+  
 #
 ## **- Set Opacity: -**
 #
@@ -250,6 +265,26 @@
 - toggle Studio Mode On/Off in OBS
 
 #
+## **- Trigger Preview Scenes: -**
+#
+
+### by Name in Argument
+**`/previewScene [scene name]`** 
+- activate a scene by name in the OSC argument. 
+    - *Example:* **`/previewScene Wide`** will activate a scene named "Wide" in the Preview in OBS. 
+   - In QLab you can use quotations to wrap into a single argument: `/scene "Webcam 1"`
+
+### by Name in Address
+**`/previewScene/[scene_name]`** 
+- activate a scene by name in the OSC address. 
+  - *Example:* `/previewScene/Wide` will activate a scene named "Wide" in the Preview in OBS. 
+  - *Note:* If a scene name contains a SPACE, replace with "_", so if OBS has a scene "Webcam 1" make OSC message: `/previewScene/Webcam_1`
+
+### Trigger Transition to Program
+**`/studioTransition [type(optional)] [duration(optional)]`** 
+- activate a Transition to Program 
+  - *Example:* `/studioTransition "Fade" 5000` will activate a transition of the Preview to Program with a Fade of 5 seconds. 
+  
 
 ## **- Streaming and Recording: -**
 #
@@ -350,7 +385,7 @@
 
 - Configure "OSC OUT" to target Application
 
-- When *Enabled* this allows OBS to send OSC to other applications when a scene is activated.
+- When *Enabled* his allows OBS to send OSC to other applications when a scene is activated.
 
 - To **use/enable** this function, change the toggle button to ON
 Configure the prefix and suffix for how you want your OSC application to receive an OSC string from OBS
@@ -358,7 +393,7 @@ Configure the prefix and suffix for how you want your OSC application to receive
   - *Example:* In OBS when a Scene named "Wide" is activated, Qlab recieves an OSC message "**/cue/Wide/start**")
   - *Note:* This currently does NOT support any spaces.
 #
-# Support The Project ❤️
+# Support The Project <3
 ### If OBSosc helped you, consider helping the project by making a one time donation via **[PayPal](http://paypal.me/joeshea2)**
 
 #
@@ -367,6 +402,7 @@ Configure the prefix and suffix for how you want your OSC application to receive
 <a href="https://discord.gg/FJ79AKPgSk">
         <img src="https://img.shields.io/discord/308323056592486420?logo=discord"
             alt="chat on Discord"></a>
+
            
 ## [Download OBSosc 2.0 Now](https://github.com/jshea2/OBSosc/releases/tag/2.0)           
 

@@ -396,7 +396,7 @@ Configure the prefix and suffix for how you want your OSC application to receive
 ## Acknowledgement
 ### This was inspired by [ObSC](https://github.com/CarloCattano/ObSC?fbclid=IwAR1zGJ_iFVq9o887hWw71lWaGZKqdAP0mMaVFyXau9x0sDgs-5KjS9HNLrk) 
 #
-# Support The Project <3
+## Support The Project ❤️
 ### If OBSosc helped you, consider helping the project by making a one time donation via **[PayPal](http://paypal.me/joeshea2)**
 
 #

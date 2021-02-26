@@ -5,7 +5,7 @@
 ## Setup
 *Requires: [obs-websocket plugin](https://github.com/Palakis/obs-websocket/releases) for OBS*
 
-## [Download OBSosc 2.0 Now](https://github.com/jshea2/OBSosc/releases/tag/2.0)
+## [Download OBSosc 2.1 Now](https://github.com/jshea2/OBSosc/releases/tag/2.1)
 
 <img width="354" alt="Screen Shot 2021-02-13 at 4 50 31 PM" src="https://user-images.githubusercontent.com/70780576/107874254-0b006d00-6e6d-11eb-9f88-285a210a4938.png">
 
@@ -404,5 +404,5 @@ Configure the prefix and suffix for how you want your OSC application to receive
             alt="chat on Discord"></a>
 
            
-## [Download OBSosc 2.0 Now](https://github.com/jshea2/OBSosc/releases/tag/2.0)           
+## [Download OBSosc 2.1 Now](https://github.com/jshea2/OBSosc/releases/tag/2.1)           
 

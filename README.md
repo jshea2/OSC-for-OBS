@@ -3,7 +3,7 @@
 
 ![Node-OBSoscsmall](https://user-images.githubusercontent.com/70780576/105978317-41ee1a80-6047-11eb-8765-1837aa1b801c.png)
 ## Setup
-*Requires: [obs-websocket plugin](https://github.com/Palakis/obs-websocket/releases) for OBS*
+*Requires: [obs-websocket plugin](https://github.com/Palakis/obs-websocket/releases) v4.9 for OBS*
 
 ## [Download OBSosc 2.1 Now](https://github.com/jshea2/OBSosc/releases/tag/2.1)
 

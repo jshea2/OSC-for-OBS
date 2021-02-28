@@ -1,11 +1,12 @@
-# OBSosc
+# OSC for OBS
 #### Control and listen to [OBS](https://obsproject.com/) via OSC protocol
 
-![Node-OBSoscsmall](https://user-images.githubusercontent.com/70780576/105978317-41ee1a80-6047-11eb-8765-1837aa1b801c.png)
+![OSCforOBS copySmall](https://user-images.githubusercontent.com/70780576/109406368-3c793e00-792d-11eb-90f0-bca884b79e80.png)
+
 ## Setup
 *Requires: [obs-websocket plugin](https://github.com/Palakis/obs-websocket/releases) for OBS (v4.9 and up)*
 
-## [Download OBSosc 2.1 Now](https://github.com/jshea2/OBSosc/releases/tag/2.1)
+## [Download OSC for OBS 2.2 Now](https://github.com/jshea2/OBSosc/releases/tag/2.2)
 
 <img width="354" alt="Screen Shot 2021-02-13 at 4 50 31 PM" src="https://user-images.githubusercontent.com/70780576/107874254-0b006d00-6e6d-11eb-9f88-285a210a4938.png">
 
@@ -19,7 +20,7 @@
 - When you close OBSosc it will save your configuration for when you open next
 - There is an option in 'File > Automatically Connect on Startup' that if enabled will automatically connect on opening OBSosc
 
-## Application OSC -> OBSosc 
+## Application OSC -> OSC for OBS 
 
 - In your OSC Application (QLab for example) patch your targeted OSC to match the "OSC IN" inputs on OBSosc.
   - default is... IP: `127.0.0.1`, Port: `3333`
@@ -397,7 +398,7 @@ Configure the prefix and suffix for how you want your OSC application to receive
 ### This was inspired by [ObSC](https://github.com/CarloCattano/ObSC?fbclid=IwAR1zGJ_iFVq9o887hWw71lWaGZKqdAP0mMaVFyXau9x0sDgs-5KjS9HNLrk) 
 #
 ## Support The Project ❤️
-### If OBSosc helped you, consider helping the project by making a one time donation via **[PayPal](http://paypal.me/joeshea2)**
+### If OSC for OBS helped you, consider helping the project by making a one time donation via **[PayPal](http://paypal.me/joeshea2)**
 
 #
 ## Join the Discord Community
@@ -407,5 +408,5 @@ Configure the prefix and suffix for how you want your OSC application to receive
             alt="chat on Discord"></a>
 
            
-## [Download OBSosc 2.1 Now](https://github.com/jshea2/OBSosc/releases/tag/2.1)           
+## [Download OSC for OBS 2.2 Now](https://github.com/jshea2/OBSosc/releases/tag/2.2)           
 

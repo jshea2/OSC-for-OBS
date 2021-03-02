@@ -9,7 +9,9 @@
 ## [Download OSC for OBS 2.2 Now](https://github.com/jshea2/OBSosc/releases/tag/2.2)
 <img width="350" alt="Screen Shot 2021-02-27 at 7 00 03 PM" src="https://user-images.githubusercontent.com/70780576/109459073-ee3e6a80-7a12-11eb-923c-0a08bb5bc279.png">
 
-
+- [Download *OSC for OBS*](https://github.com/jshea2/OBSosc/releases/tag/2.2)   
+   - If on Mac.. Place *OSC for OBS* in Applications folder
+   - If you don't you might get [this error](https://github.com/jshea2/OSC-for-OBS/edit/master/README.md#Troubleshooting) on close
 - Configure the input fields 
 - Successfully "Connect" 
 - The window will open a "DevTools" window
@@ -393,6 +395,11 @@ Configure the prefix and suffix for how you want your OSC application to receive
 
   - *Example:* In OBS when a Scene named "Wide" is activated, Qlab recieves an OSC message "**/cue/Wide/start**")
   - *Note:* This currently does NOT support any spaces.
+
+# Troubleshooting
+<img width="422" alt="Screen Shot 2021-03-01 at 5 44 26 PM" src="https://user-images.githubusercontent.com/70780576/109584601-b4bf3b00-7ab6-11eb-911f-e34c6e0455bf.png">
+
+- If you're getting this error on close make sure you drag and drop *OSC for OBS* from Downloads to Applications
 
 ## Acknowledgement
 ### This was inspired by [ObSC](https://github.com/CarloCattano/ObSC?fbclid=IwAR1zGJ_iFVq9o887hWw71lWaGZKqdAP0mMaVFyXau9x0sDgs-5KjS9HNLrk) 

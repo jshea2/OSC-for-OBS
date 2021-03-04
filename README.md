@@ -19,17 +19,17 @@
 - In the "Console" tab it will log IP and Port info, the number of available scenes, and a list of all scenes with numbers 
   - This can be used as an index argument in your **/scene** OSC message
 - To save a config file with "Save As" please "Connect" first
-- When you close OBSosc it will save your configuration for when you open next
-- There is an option in 'File > Automatically Connect on Startup' that if enabled will automatically connect on opening OBSosc
+- When you close *OSC for OBS* it will save your configuration for when you open next
+- There is an option in 'File > Automatically Connect on Startup' that if enabled will automatically connect on opening *OSC for OBS*
 
 ## Application OSC -> OSC for OBS 
 
-- In your OSC Application (QLab for example) patch your targeted OSC to match the "OSC IN" inputs on OBSosc.
+- In your OSC Application (QLab for example) patch your targeted OSC to match the "OSC IN" inputs on OSC for OBS.
   - default is... IP: `127.0.0.1`, Port: `3333`
 - **DO NOT** Use UNDERSCORES in OBS. Only use them in your OSC Address. So, If your OBS Scene or Source name contains a SPACE, then in your OSC message replace the SPACE with an UNDERSCORE.
   - *Example:* if OBS Scene name is `Scene 1`, then your OSC address should use `Scene_1`.
     - *Note:* If OBS names contain UNDERSCORES this will not work. 
-- OBSosc can be used for any application that transmits and/or receives unbundled OSC. 
+- OSC for OBS can be used for any application that transmits and/or receives unbundled OSC. 
   - This was designed with QLab, so the example show file of all the OSC commands is available in Assets on the Github or in the downloaded folder: "Qlab OBSosc Examples.qlab4" 
     - **Note:** Sending OSC Commands requires a paid version of Qlab.
  

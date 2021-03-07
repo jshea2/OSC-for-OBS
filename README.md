@@ -393,8 +393,7 @@
 - To **use/enable** this function, change the toggle button to ON
 Configure the prefix and suffix for how you want your OSC application to receive an OSC string from OBS
 
-  - *Example:* In OBS when a Scene named "Wide" is activated, Qlab recieves an OSC message "**/cue/Wide/start**")
-  - *Note:* This currently does NOT support any spaces.
+  - *Example:* In OBS when a Scene named "Wide Shot" is activated, Qlab recieves an OSC message "**/cue/Wide_Shot/start**")
 
 # Troubleshooting
 <img width="222" alt="Screen Shot 2021-03-01 at 5 44 26 PM" src="https://user-images.githubusercontent.com/70780576/109584601-b4bf3b00-7ab6-11eb-911f-e34c6e0455bf.png">

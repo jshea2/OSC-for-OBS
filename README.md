@@ -325,6 +325,19 @@
 **`/toggleStreaming`** 
 - toggle the start/stop streaming button in OBS
 
+
+## **- Settings: -**
+#
+
+### Set Scene Collection
+***`/setSceneCollection [Scene Collection Name]`**
+- set the scene collection with the specified name
+
+### Set Profile
+***`/setProfile [Profile Name]`**
+- set the profile with the specified name
+
+
 #
 
 ## **~ Editing Commands While Selected in OBS: ~**
@@ -332,6 +345,9 @@
 *Mainly used for **[TouchOSC](https://hexler.net/products/touchosc)***
 - *Layout file included in downloaded folder or in Assets on Github*
 - Download and install [TouchOSC Editor](https://hexler.net/products/touchosc) to open "Layout" and import to device
+    - <img src="https://user-images.githubusercontent.com/70780576/112069276-c7161d00-8b28-11eb-8021-914f2100b5b0.PNG" 
+alt="NodeOBS-ZoomOSC-Autocropper DEMO Video" width="380" border="10" />
+
 
 ### Add Scene Item
 **`/addSceneItem [scene_item]`**
@@ -380,6 +396,18 @@
       |----|---|---|
       | 2 | 0 | 1 |
       | 6 | 4 | 5 |
+
+### Change Rotation
+**`/spin [int]`**
+- Set rotation for **selected** source
+
+### Change Bounds to Fit to screen
+**`/fitToScreen`**
+- Set bounds to Fit to Screen
+
+### Duplicate Current Scene
+**`/duplicateCurrentScene`**
+- Duplicates the current active OBS scene
 
 #
 

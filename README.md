@@ -6,10 +6,11 @@
 ## Setup
 *Requires: [obs-websocket plugin](https://github.com/Palakis/obs-websocket/releases) for OBS (v4.9 and up)*
 
-## [Download *OSC for OBS (v2.2)* Now](https://github.com/jshea2/OBSosc/releases/tag/2.2)
-<img width="350" alt="Screen Shot 2021-02-27 at 7 00 03 PM" src="https://user-images.githubusercontent.com/70780576/109459073-ee3e6a80-7a12-11eb-923c-0a08bb5bc279.png">
+## [Download *OSC for OBS (v2.4)* Now](https://github.com/jshea2/OBSosc/releases/tag/2.4)
+<img width="350" alt="Screen Shot 2021-02-27 at 7 00 03 PM" src="https://user-images.githubusercontent.com/70780576/114637454-41e0dc80-9c7e-11eb-9e4f-8cf7f4c8b2a4.png">
 
-- [Download *OSC for OBS*](https://github.com/jshea2/OBSosc/releases/tag/2.2)   
+
+- [Download *OSC for OBS*](https://github.com/jshea2/OBSosc/releases/tag/2.4)   
    - If on Mac: Place *OSC for OBS* in Applications folder
       - If you don't you might get [this error](https://github.com/jshea2/OSC-for-OBS/blob/master/README.md#troubleshooting) on close
 - Configure the input fields 
@@ -58,6 +59,14 @@
 - activate a scene by name in the OSC address. 
   - *Example:* `/scene/Wide` will activate a scene named "Wide" in OBS. 
   - *Note:* If a scene name contains a SPACE, replace with "_", so if OBS has a scene "Webcam 1" make OSC message: `/scene/Webcam_1`
+
+### by TouchOSC
+**`/scene/[scene_name]`**
+Value `0` to `1`
+- activates a scene with name in address and a value of 1 with TouchOSC
+   - *Example:* `/scene/Wide` and a value of `0` to `1` will activate the scene "Wide" in OBS
+   - *Note:* If a scene name contains a SPACE, replace with "_", so if OBS has a scene "Webcam 1" make OSC message: `/scene/Webcam_1`
+   - See "OBS -> Application" for feedback of active scenes
   
 ### Next Scene
 **`/go`**  
@@ -177,6 +186,10 @@
 ### Unmute
 **`/[source_name]/unmute`**
 - Unmute the specified source
+
+### Toggle Audio
+**`/[source_name]/audioToggle [0 or 1]`**
+- Unmute and Mute the specified source by toggling
 
 ### Volume
 **`/[source_name]/volume [0 thru 1]`**
@@ -423,6 +436,24 @@ Configure the prefix and suffix for how you want your OSC application to receive
 
   - *Example:* In OBS when a Scene named "Wide Shot" is activated, Qlab recieves an OSC message "**/cue/Wide_Shot/start**")
 
+## TouchOSC Feedback:
+
+This sends OSC messages back to TouchOSC for dynamically highlighting buttons. 
+
+Use the following setup for a TouchOSC Editor push button:
+
+<img width="257" alt="Screen Shot 2021-04-13 at 4 44 31 PM" src="https://user-images.githubusercontent.com/70780576/114638180-e1eb3580-9c7f-11eb-8300-1b27e275008e.png">
+
+In OSC for OBS use the following setup:
+
+<img width="292" alt="Screen Shot 2021-04-13 at 5 46 07 PM" src="https://user-images.githubusercontent.com/70780576/114638300-28409480-9c80-11eb-83aa-1feb3b332941.png">
+
+- OSC Out IP must be the IP of the device using TouchOSC
+- OSC Out Slider must be Enabled
+- prefix must be `/scene/` and suffix left blank
+- TouchOSC Feedback must also be checked
+
+
 # Troubleshooting
 <img width="222" alt="Screen Shot 2021-03-01 at 5 44 26 PM" src="https://user-images.githubusercontent.com/70780576/109584601-b4bf3b00-7ab6-11eb-911f-e34c6e0455bf.png">
 
@@ -442,5 +473,5 @@ Configure the prefix and suffix for how you want your OSC application to receive
             alt="chat on Discord"></a>
 
            
-## [Download *OSC for OBS (v2.2)* Now](https://github.com/jshea2/OBSosc/releases/tag/2.2)           
+## [Download *OSC for OBS (v2.4)* Now](https://github.com/jshea2/OBSosc/releases/tag/2.4)           
 

@@ -103,11 +103,11 @@ Value `0` to `1`
 #
 ## **- Set Text: -**
 #
-**`/[source_name] [text content] [size(optional)] [font (optional)]`**
+**`/[source_name]/setText [text content] [size(optional)] [font (optional)]`**
 - change text content, size, and font.
   - *Note:* Size and Font are optional
-  - *Example:* `/text_1 "Hello World."` will change the text contents of source "text 1" to "Hello World."
-  - *Example 2:* `/text_1 "Hello World." 150 Arial` will change the same as above and change the size to 150 pt and Font to 'Arial'
+  - *Example:* `/text_1/setText "Hello World."` will change the text contents of source "text 1" to "Hello World."
+  - *Example 2:* `/text_1/setText "Hello World." 150 Arial` will change the same as above and change the size to 150 pt and Font to 'Arial'
   
 #
 ## **- Set Opacity: -**

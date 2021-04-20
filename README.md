@@ -472,7 +472,7 @@ Use the following setup for `/[source]/volume` command for a *fader* in TouchOSC
 
 ### **Muting/UnMuting Toggle Feedback**
 
-Use the following setup for `/[source]/audioStatus` command for a *toggle button* in TouchOSC Editor:
+Use the following setup for `/[source]/audioToggle` command for a *toggle button* in TouchOSC Editor:
 
 <img width="252" alt="Screen Shot 2021-04-19 at 8 33 18 PM" src="https://user-images.githubusercontent.com/70780576/115337099-42351800-a155-11eb-930e-edf868ff4033.png">
 

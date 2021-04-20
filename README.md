@@ -6,11 +6,11 @@
 ## Setup
 *Requires: [obs-websocket plugin](https://github.com/Palakis/obs-websocket/releases) for OBS (v4.9 and up)*
 
-## [Download *OSC for OBS (v2.4)* Now](https://github.com/jshea2/OBSosc/releases/tag/2.4)
+## [Download *OSC for OBS (v2.5)* Now](https://github.com/jshea2/OBSosc/releases/tag/2.5)
 <img width="350" alt="Screen Shot 2021-02-27 at 7 00 03 PM" src="https://user-images.githubusercontent.com/70780576/114637454-41e0dc80-9c7e-11eb-9e4f-8cf7f4c8b2a4.png">
 
 
-- [Download *OSC for OBS*](https://github.com/jshea2/OBSosc/releases/tag/2.4)   
+- [Download *OSC for OBS*](https://github.com/jshea2/OBSosc/releases/tag/2.5)   
    - If on Mac: Place *OSC for OBS* in Applications folder
       - If you don't you might get [this error](https://github.com/jshea2/OSC-for-OBS/blob/master/README.md#troubleshooting) on close
 - Configure the input fields 
@@ -353,6 +353,11 @@ Value `0` to `1`
 
 #
 
+## **- Renaming -**
+***`/rename [current-name] [new-name]`**
+- rename scene or source
+   - *Example:* `/rename "Audio" "NewAudio"` will change the source named "Audio" to "NewAudio"
+
 ## **~ Editing Commands While Selected in OBS: ~**
 #
 *Mainly used for **[TouchOSC](https://hexler.net/products/touchosc)***
@@ -438,20 +443,62 @@ Configure the prefix and suffix for how you want your OSC application to receive
 
 ## TouchOSC Feedback:
 
-This sends OSC messages back to TouchOSC for dynamically highlighting buttons. 
+When *Checked* this sends OSC messages back to TouchOSC for dynamic control. 
 
-Use the following setup for a TouchOSC Editor push button:
+- OSC Out IP must be the IP of the device using TouchOSC
+- OSC Out Slider must be Enabled
+
+
+### **Active Scene Feedback**
+
+Use the following setup for `/scene` command for a *push button* in TouchOSC Editor:
 
 <img width="257" alt="Screen Shot 2021-04-13 at 4 44 31 PM" src="https://user-images.githubusercontent.com/70780576/114638180-e1eb3580-9c7f-11eb-8300-1b27e275008e.png">
+
+- make sure "Local Feedback" is checked
 
 In OSC for OBS use the following setup:
 
 <img width="292" alt="Screen Shot 2021-04-13 at 5 46 07 PM" src="https://user-images.githubusercontent.com/70780576/114638300-28409480-9c80-11eb-83aa-1feb3b332941.png">
 
-- OSC Out IP must be the IP of the device using TouchOSC
-- OSC Out Slider must be Enabled
 - prefix must be `/scene/` and suffix left blank
-- TouchOSC Feedback must also be checked
+
+
+### **Fader Volume Feedback**
+
+Use the following setup for `/[source]/volume` command for a *fader* in TouchOSC Editor:
+
+<img width="281" alt="Screen Shot 2021-04-19 at 8 33 29 PM" src="https://user-images.githubusercontent.com/70780576/115336527-414fb680-a154-11eb-9bf3-7c2fb4a5f46d.png">
+
+### **Muting/UnMuting Toggle Feedback**
+
+Use the following setup for `/[source]/audioStatus` command for a *toggle button* in TouchOSC Editor:
+
+<img width="252" alt="Screen Shot 2021-04-19 at 8 33 18 PM" src="https://user-images.githubusercontent.com/70780576/115337099-42351800-a155-11eb-930e-edf868ff4033.png">
+
+### **Stats Label Feedback**
+
+***When Streaming/Recording:***
+- `/fps`
+   - Returns frames per second `[int] fps`
+- `/streaming`
+   - Returns “•LIVE” if stream is active
+- `/recording`
+   - Returns “•REC” when recording
+- `/streamTime`
+   - Returns elapsed stream time `HH:MM:SS`
+- `/cpuUsage`
+   - Returns cpu usage `[int] cpu usage`
+- `/freeDiskSpace`
+   - Returns free disk space `[int] free disk space`
+- `/averageFrameRate`
+   - Returns average frame rate `[int] avg frame rate`
+- `/memoryUsage`
+   - Returns memory usage `[int] memory usage`
+- `/kbpsEncoder`
+   - Returns encoder data `[int] kbps`
+
+<img width="252" alt="Screen Shot 2021-04-19 at 8 33 18 PM" src="https://user-images.githubusercontent.com/70780576/115337663-40b81f80-a156-11eb-92a7-894080c77711.jpg">
 
 
 # Troubleshooting
@@ -473,5 +520,5 @@ In OSC for OBS use the following setup:
             alt="chat on Discord"></a>
 
            
-## [Download *OSC for OBS (v2.4)* Now](https://github.com/jshea2/OBSosc/releases/tag/2.4)           
+## [Download *OSC for OBS (v2.5)* Now](https://github.com/jshea2/OBSosc/releases/tag/2.5)           
 

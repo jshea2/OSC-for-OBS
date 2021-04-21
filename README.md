@@ -101,11 +101,12 @@ Value `0` to `1`
   - *Note:* If a filter name or source name contains a SPACE, replace with "_", so if OBS has a filter "Color Correction" and a source name of "Video Input" make OSC message the example from above.
 
 #
-## **- Set Text: -**
+## **- Set Text (for FreeType 2 ONLY): -**
 #
 **`/[source_name]/setText [text content] [size(optional)] [font (optional)]`**
 - change text content, size, and font.
   - *Note:* Size and Font are optional
+  - *Note:* This will not work with 'GDI+', so use 'FreeType 2' instead. On PC you can find it in 'Add > Depricated' 
   - *Example:* `/text_1/setText "Hello World."` will change the text contents of source "text 1" to "Hello World."
   - *Example 2:* `/text_1/setText "Hello World." 150 Arial` will change the same as above and change the size to 150 pt and Font to 'Arial'
   

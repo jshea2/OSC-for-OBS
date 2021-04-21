@@ -37,7 +37,7 @@
 #
 # OSC Command List:
 
-*Note: a space in the syntax indicates the separation between address and argument's*
+*Note: a space in the notated syntax indicates the separation between address and argument's*
 
 *Example:* `/scene "Scene 1"` would be...
 

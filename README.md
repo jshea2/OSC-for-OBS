@@ -37,6 +37,15 @@
 #
 # OSC Command List:
 
+*Note: a space in the syntax indicates the separation between address and argument's*
+
+*Example:* `/scene "Scene 1"` would be...
+
+| address | argument 1 | argument 2 | argument ect... |
+|---------|------------|------------|-----------------|
+| /scene  | Scene 1    |            |                 |
+
+#
 ## **- Trigger Scenes: -**
 #
 

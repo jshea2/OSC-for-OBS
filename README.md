@@ -368,6 +368,11 @@ Value `0` to `1`
 - rename scene or source
    - *Example:* `/rename "Audio" "NewAudio"` will change the source named "Audio" to "NewAudio"
 
+## **- Send Closed Captions -**
+***`/sendCC [text]`**
+- Send the text as embedded CEA-608 caption data
+   - *Example:* `/sendCC "Hello world."` will send "Hello world." as an embedded closed caption
+
 ## **~ Editing Commands While Selected in OBS: ~**
 #
 *Mainly used for **[TouchOSC](https://hexler.net/products/touchosc)***
@@ -469,11 +474,6 @@ Use the following setup for `/scene` command for a *push button* in TouchOSC Edi
 
 In OSC for OBS use the following setup:
 
-<img width="292" alt="Screen Shot 2021-04-13 at 5 46 07 PM" src="https://user-images.githubusercontent.com/70780576/114638300-28409480-9c80-11eb-83aa-1feb3b332941.png">
-
-- prefix must be `/scene/` and suffix left blank
-
-
 ### **Fader Volume Feedback**
 
 Use the following setup for `/[source]/volume` command for a *fader* in TouchOSC Editor:
@@ -486,13 +486,38 @@ Use the following setup for `/[source]/audioToggle` command for a *toggle button
 
 <img width="252" alt="Screen Shot 2021-04-19 at 8 33 18 PM" src="https://user-images.githubusercontent.com/70780576/115337099-42351800-a155-11eb-930e-edf868ff4033.png">
 
+### **Media Playback Feedback**
+
+#### **Play**
+- When a media is played in OBS the following OSC is sent `/[source]/mediaPlay 1`, `/[source]/mediaPause 0`, and `/[source]/mediaStop 0`
+
+#### **Pause**
+- When a media is paused in OBS the following OSC is sent `/[source]/mediaPause 1`, `/[source]/mediaPlay 0`, and `/[source]/mediaStop 0`
+
+#### **Stop**
+- When a media is stopped in OBS the following OSC is sent `/[source]/mediaStop 1`, `/[source]/mediaPause 0`, and `/[source]/mediaPlay 0`
+
+### **Source Visibility**
+
+- When a source visibility is changed in OBS the following OSC is sent `/[scene]/[source]/visible [0 or 1]` 
+   - (`0` if off and `1` if on)
+
+### **Transitions**
+
+#### **Transition Type**
+- When a transition is triggered in OBS the following OSC is sent `/transitionType [type]`
+
+#### **Transition Duration**
+- When a transition is triggered in OBS the following OSC is sent `/transitionDuration [int]`
+
+
 ### **Stats Label Feedback**
 
 ***When Streaming/Recording:***
 - `/fps`
    - Returns frames per second `[int] fps`
 - `/streaming`
-   - Returns “•LIVE” if stream is active
+   - Returns `1` if stream started, `0` if stopped
 - `/recording`
    - Returns “•REC” when recording
 - `/streamTime`

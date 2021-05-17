@@ -6,11 +6,11 @@
 ## Setup
 *Requires: [obs-websocket plugin](https://github.com/Palakis/obs-websocket/releases) for OBS (v4.9 and up)*
 
-## [Download *OSC for OBS (v2.5)* Now](https://github.com/jshea2/OBSosc/releases/tag/2.5)
+## [Download *OSC for OBS (v2.5)* Now](https://github.com/jshea2/OBSosc/releases)
 <img width="350" alt="Screen Shot 2021-02-27 at 7 00 03 PM" src="https://user-images.githubusercontent.com/70780576/114637454-41e0dc80-9c7e-11eb-9e4f-8cf7f4c8b2a4.png">
 
 
-- [Download *OSC for OBS*](https://github.com/jshea2/OBSosc/releases/tag/2.5)   
+- [Download *OSC for OBS*](https://github.com/jshea2/OBSosc/releases)   
    - If on Mac: Place *OSC for OBS* in Applications folder
       - If you don't you might get [this error](https://github.com/jshea2/OSC-for-OBS/blob/master/README.md#troubleshooting) on close
 - Configure the input fields 
@@ -555,5 +555,5 @@ Use the following setup for `/[source]/audioToggle` command for a *toggle button
             alt="chat on Discord"></a>
 
            
-## [Download *OSC for OBS (v2.5)* Now](https://github.com/jshea2/OBSosc/releases/tag/2.5)           
+## [Download *OSC for OBS (v2.5)* Now](https://github.com/jshea2/OBSosc/releases)           
 

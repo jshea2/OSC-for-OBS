@@ -315,7 +315,7 @@ Value `0` to `1`
 - activate a Transition to Program 
   - *Example:* `/studioTransition "Fade" 5000` will activate a transition of the Preview to Program with a Fade of 5 seconds. 
   
-
+#
 ## **- Streaming and Recording: -**
 #
 
@@ -376,7 +376,7 @@ Value `0` to `1`
 **`/toggleVirtualCam`** 
 - toggle the start/stop VirtualCam button in OBS
 
-
+#
 ## **- Settings: -**
 #
 
@@ -388,8 +388,10 @@ Value `0` to `1`
 ***`/setProfile [Profile Name]`**
 - set the profile with the specified name
 
+#
 ## **- NDI and Other Outputs -**
 #
+
 ### List Outputs NAmes
 **`/listOutputs`**
 - Logs a list of all available outputs
@@ -405,6 +407,7 @@ Value `0` to `1`
 - *Example:* `/stopOutput "NDI Main Output"`
    - This will disable the "NDI Main Output" output
 
+#
 ## **- Miscellaneous -**
 #
 

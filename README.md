@@ -6,8 +6,8 @@
 ## Setup
 *Requires: [obs-websocket plugin](https://github.com/Palakis/obs-websocket/releases) for OBS (v4.9 and up)*
 
-## [Download *OSC for OBS (v2.5)* Now](https://github.com/jshea2/OBSosc/releases)
-<img width="350" alt="Screen Shot 2021-02-27 at 7 00 03 PM" src="https://user-images.githubusercontent.com/70780576/114637454-41e0dc80-9c7e-11eb-9e4f-8cf7f4c8b2a4.png">
+## [Download *OSC for OBS (v2.7)* Now](https://github.com/jshea2/OBSosc/releases)
+<img width="350" alt="Screen Shot 2021-11-21 at 4 17 23 PM" src="https://user-images.githubusercontent.com/70780576/142785474-3b6a817c-cd54-4a32-9020-da0d54e9925b.png">
 
 
 - [Download *OSC for OBS*](https://github.com/jshea2/OBSosc/releases)   
@@ -278,6 +278,10 @@ Value `0` to `1`
 ## **- Studio Mode: -**
 #
 
+### Set StudioMode
+**`/setStudioMode [0 or 1]`** 
+- if argument is `1` then Studio Mode enables, if `0` it disables in OBS
+
 ### Enable
 **`/enableStudioMode`** 
 - enable Studio Mode in OBS
@@ -315,6 +319,10 @@ Value `0` to `1`
 ## **- Streaming and Recording: -**
 #
 
+### Set Recording
+**`/setRecording [0 or 1]`**
+- start recording if argument is `1` and stop if `0`
+
 ### Start Recording
 **`/startRecording`**
 - start recording in OBS
@@ -336,6 +344,10 @@ Value `0` to `1`
 - resume recording in OBS
 
 
+### Set Streaming
+**`/setStreaming [0 or 1]`**
+- start streaming if argument is `1` and stop if `0`
+
 ### Start Streaming
 **`/startStreaming`**
 - start streaming in OBS
@@ -347,6 +359,22 @@ Value `0` to `1`
 ### Toggle Streaming
 **`/toggleStreaming`** 
 - toggle the start/stop streaming button in OBS
+
+### Set VirtualCam
+**`/setVirtualCam [0 or 1]`**
+- start VirtualCam if argument is `1` and stop if `0`
+
+### Start VirtualCam
+**`/startVirtualCam`**
+- start VirtualCam in OBS
+
+### Stop VirtualCam
+**`/stopVirtualCam`** 
+- stop VirtualCam in OBS
+
+### Toggle VirtualCam
+**`/toggleVirtualCam`** 
+- toggle the start/stop VirtualCam button in OBS
 
 
 ## **- Settings: -**
@@ -360,18 +388,72 @@ Value `0` to `1`
 ***`/setProfile [Profile Name]`**
 - set the profile with the specified name
 
+## **- NDI and Other Outputs -**
+#
+### List Outputs NAmes
+**`/listOutputs`**
+- Logs a list of all available outputs
+- *NOTE:* Use names listed for argument in start and stop commands
 
+### Start Output
+**`/startOutput [name]`**
+- *Example:* `/startOutput "NDI Main Output"`
+   - This will enable the "NDI Main Output" output
+
+### Stop Output
+**`/stopOutput [name]`**
+- *Example:* `/stopOutput "NDI Main Output"`
+   - This will disable the "NDI Main Output" output
+
+## **- Miscellaneous -**
 #
 
-## **- Renaming -**
-***`/rename [current-name] [new-name]`**
+### Renaming
+**`/rename [current-name] [new-name]`**
 - rename scene or source
    - *Example:* `/rename "Audio" "NewAudio"` will change the source named "Audio" to "NewAudio"
 
-## **- Send Closed Captions -**
+### Send Closed Captions
 ***`/sendCC [text]`**
 - Send the text as embedded CEA-608 caption data
    - *Example:* `/sendCC "Hello world."` will send "Hello world." as an embedded closed caption
+
+
+### Set Recording File Name
+***`/recFileName [string]`**
+- sets the name of the file for when you record
+
+### Get Source Text (FreeType2) String Repeatedly
+`/[text source]/getTextFreetype [1]`
+- Returns to the OSC Client:
+     - `/[text_source]/text [string]`
+- *NOTE:* Disabling the loop is not yet implemented. Quit and reopen app to stop.
+- The loop returns every 500ms (half second)
+- ex. Possible use case would be for getting a text source that has a countdown script. 
+
+### Get Source Text (GDI) String Repeatedly
+`/[text source]/getTextGDI [1]`
+- Returns to the OSC Client:
+     - `/[text_source]/text [string]`
+- *NOTE:* Disabling the loop is not yet implemented. Quit and reopen app to stop.
+- The loop returns every 500ms (half second)
+- ex. Possible use case would be for getting a text source that has a countdown script.
+
+### Set Active Scene Item Visibility by Index
+-`/[index]/activeSceneItemVisibility [0 or 1]`
+   - this uses the index of your sources to control the visibility of active scene.
+
+### Set Specific Scene Item Visibility by Index
+-`/[scene_name]/[index]/activeSceneItemVisibility [0 or 1]`
+   - this uses the index of your sources to control the visibility of a specific scene.
+
+### Take Screenshot
+-`/takeScreenshot`
+   - This saves a .png file of your current active scene and saves it to your *Documents* folder
+
+#
+
+
 
 ## **~ Editing Commands While Selected in OBS: ~**
 #
@@ -519,7 +601,7 @@ Use the following setup for `/[source]/audioToggle` command for a *toggle button
 - `/streaming`
    - Returns `1` if stream started, `0` if stopped
 - `/recording`
-   - Returns “•REC” when recording
+   - Returns `1` if recording started, `0` if stopped
 - `/streamTime`
    - Returns elapsed stream time `HH:MM:SS`
 - `/cpuUsage`
@@ -555,5 +637,5 @@ Use the following setup for `/[source]/audioToggle` command for a *toggle button
             alt="chat on Discord"></a>
 
            
-## [Download *OSC for OBS (v2.5)* Now](https://github.com/jshea2/OBSosc/releases)           
+## [Download *OSC for OBS (v2.7)* Now](https://github.com/jshea2/OBSosc/releases)           
 

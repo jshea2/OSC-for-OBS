@@ -5,7 +5,8 @@
 
 ## Setup
 *Requires: [obs-websocket plugin](https://github.com/Palakis/obs-websocket/releases) for OBS (v4.9 and up)*
-*(NOTE: obs-websocket alpha 5.0 has not been tested)*
+
+* NOTE: obs-websocket alpha 5.0 has not been tested
 
 ## [Download *OSC for OBS (v2.7.1)* Now](https://github.com/jshea2/OBSosc/releases)
 <img width="350" alt="Screen Shot 2021-11-21 at 4 17 23 PM" src="https://user-images.githubusercontent.com/70780576/142785474-3b6a817c-cd54-4a32-9020-da0d54e9925b.png">
@@ -473,7 +474,7 @@ Value `0` to `1`
    - this command simulates a keypress on front window. (Use this syntax for keys)[https://github.com/garimpeiro-it/node-key-sender#list-of-key-codes]
    - ex. `/keypress "space"`
     - this simulates a space keypress on the active window
-   - ex. `/keypress "h,i"
+   - ex. `/keypress "h,i"`
     - this simulates a `h` and then an `i` key press to active window
    - ex. `/keypress "control,s"`
     - ex. this simulates a keycombo of `Control + S` to active window

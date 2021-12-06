@@ -5,8 +5,9 @@
 
 ## Setup
 *Requires: [obs-websocket plugin](https://github.com/Palakis/obs-websocket/releases) for OBS (v4.9 and up)*
+*(NOTE: obs-websocket alpha 5.0 has not been tested)*
 
-## [Download *OSC for OBS (v2.7)* Now](https://github.com/jshea2/OBSosc/releases)
+## [Download *OSC for OBS (v2.8)* Now](https://github.com/jshea2/OBSosc/releases)
 <img width="350" alt="Screen Shot 2021-11-21 at 4 17 23 PM" src="https://user-images.githubusercontent.com/70780576/142785474-3b6a817c-cd54-4a32-9020-da0d54e9925b.png">
 
 
@@ -454,7 +455,29 @@ Value `0` to `1`
 -`/takeScreenshot`
    - This saves a .png file of your current active scene and saves it to your *Documents* folder
 
-#
+### Open External File / URL
+*Might ask to allow "OSC for OBS" access*
+- `/openExternal [string]`
+   - this command opens local applications, files, and/or websites with file or url path
+   - ex. `/openExternal "https://google.com"`
+    - opens google in default browser
+   - ex. Mac `/openExternal "file:/System/Applications/Stocks.app"`
+   - ex. PC `/openExternal "file://c:/windows/system32/calc.exe"`
+    - opens 'Calculator' app
+   - ex. Mac `/openExternal "file:/Users/joeshea/Documents/texttest1.png"`
+    - opens 'texttest1.png' in default viewer (like Preview)
+
+### Simulate Keypress on Front/Active Window *(BETA)*
+*(Java Run Time)[https://www.java.com/en/download/manual.jsp] is required for this feature*
+- `/keypress [string]`
+   - this command simulates a keypress on front window. (Use this syntax for keys)[https://github.com/garimpeiro-it/node-key-sender#list-of-key-codes]
+   - ex. `/keypress "space"`
+    - this simulates a space keypress on the active window
+   - ex. `/keypress "h,i"
+    - this simulates a `h` and then an `i` key press to active window
+   - ex. `keypress "control,s"`
+    - ex. this simulates a keycombo of `Control + S` to active window
+ - *Note:* This feature can send multiple keypresses by using a comma `,`, but using combinations of shift, control, and alt have been buggy. Please refer to (this repository for issues)[https://github.com/garimpeiro-it/node-key-sender]
 
 
 
@@ -640,5 +663,5 @@ Use the following setup for `/[source]/audioToggle` command for a *toggle button
             alt="chat on Discord"></a>
 
            
-## [Download *OSC for OBS (v2.7)* Now](https://github.com/jshea2/OBSosc/releases)           
+## [Download *OSC for OBS (v2.8)* Now](https://github.com/jshea2/OBSosc/releases)           
 

@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>OBSosc API</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+ 
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="obsosc-v20">OBSosc (v2.0)</h1>
+<h2 id="setup">Setup</h2>
+<p><em>Download and Install: obs-websocket plugin
+<ul>
+<li>Configure the input fields</li>
+<li>Successfully &quot;Connect&quot;</li>
+<li>The window will open a &quot;DevTools&quot; window
+<ul>
+<li>Make sure it's on the &quot;Console&quot; tab, not &quot;Elements&quot;</li>
+</ul>
+</li>
+<li>In the &quot;Console&quot; tab it will log IP and Port info, the number of available scenes, and a list of all scenes with numbers
+<ul>
+<li>This can be used as an index argument in your <strong>/scene</strong> OSC message</li>
+</ul>
+</li>
+<li>To save a config file with &quot;Save As&quot; please &quot;Connect&quot; first</li>
+</ul>
+<h2 id="application-osc---obsosc">Application OSC -&gt; OBSosc</h2>
+<ul>
+<li>In your OSC Application (QLab for example) patch your targeted OSC to match the &quot;OSC IN&quot; inputs on OBSosc.
+<ul>
+<li>default is... IP: <code>127.0.0.1</code>, Port: <code>3333</code></li>
+</ul>
+</li>
+<li>OBSosc can be used for any application that transmits and/or receives unbundled OSC.
+<ul>
+<li>This was designed with QLab, so the example show file of all the OSC commands is available in Assets on the Github or in the downloaded folder: &quot;Qlab OBSosc Examples.qlab4&quot;
+<ul>
+<li><strong>Note:</strong> Sending OSC Commands requires a paid version of Qlab.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id=""></h1>
+<h1 id="osc-command-list">OSC Command List:</h1>
+<h2 id="trigger-scenes"><strong>- Trigger Scenes: -</strong></h2>
+<h1 id=""></h1>
+<h3 id="by-name-in-argument">by Name in Argument</h3>
+<p><strong><code>/scene [scene name]</code></strong></p>
+<ul>
+<li>activate a scene by name in the OSC argument.
+<ul>
+<li><em>Example:</em> <strong><code>/scene Wide</code></strong> will activate a scene named &quot;Wide&quot; in OBS.</li>
+<li><em>Note:</em> SPACES will work ok for this format, so <code>/scene Webcam 1</code> is valid syntax</li>
+<li>In QLab you can use quotations to wrap into a single argument: <code>/scene &quot;Webcam 1&quot;</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="by-index-as-scene">by Index as Scene</h3>
+<p><strong><code>/scene [index number]</code></strong></p>
+<ul>
+<li>activate a scene with the index associated from the logged list.
+<ul>
+<li><em>Example:</em> <code>/scene 1</code> will activate the first scene in OBS.</li>
+<li><em>Note:</em> Floats will be rounded down.
+<ul>
+<li><em>Example:</em> <code>/scene 1.9</code> = <code>/scene 1</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="by-name-in-address">by Name in Address</h3>
+<p><strong><code>/scene/[scene_name]</code></strong></p>
+<ul>
+<li>activate a scene by name in the OSC address.
+<ul>
+<li><em>Example:</em> <code>/scene/Wide</code> will activate a scene named &quot;Wide&quot; in OBS.</li>
+<li><em>Note:</em> If a scene name contains a SPACE, replace with &quot;_&quot;, so if OBS has a scene &quot;Webcam 1&quot; make OSC message: <code>/scene/Webcam_1</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="next-scene">Next Scene</h3>
+<p><strong><code>/go</code></strong></p>
+<ul>
+<li>activates the next scene in the list, if this is triggered on the last scene it will go to the first scene</li>
+</ul>
+<h3 id="previous-scene">Previous Scene</h3>
+<p><strong><code>/back</code></strong></p>
+<ul>
+<li>activates the previous scene in the list, if this is triggered on the first scene it will go to the last scene</li>
+</ul>
+<h1 id=""></h1>
+<h2 id="set-transition-type-and-duration"><strong>- Set Transition Type and Duration: -</strong></h2>
+<h1 id=""></h1>
+<p><strong><code>/[type]/transition [duration]</code></strong></p>
+<ul>
+<li>sets the desired transition and duration(in milliseconds).
+<ul>
+<li><em>Example:</em> <code>/Cut/transition</code> will change the current Scene Transition to &quot;Cut&quot;. <code>/Fade/transition 5000</code> will set the current Scene Transition to &quot;Fade&quot; with a &quot;5000&quot; millisecond duration (5 seconds).
+<ul>
+<li><em>Note:</em> <code>[type]</code> must be identical to Transition Type name in OBS:
+<ul>
+<li><code>Fade</code>, <code>Cut</code>, <code>Stinger</code>, <code>Fade_to_Color</code>, <code>Luma_Wipe</code>, <code>Slide</code>, <code>Swipe</code>, and Custom Transition Names. This also works with the <code>Move</code> <a href="https://obsproject.com/forum/resources/move-transition.913/">plugin</a>.</li>
+</ul>
+</li>
+<li>If you do not set a duration in the 1st argument it will keep the current duration and log what it is.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id=""></h1>
+<h2 id="set-source-visibility-onoff"><strong>- Set Source Visibility On/Off: -</strong></h2>
+<h1 id=""></h1>
+<p><strong><code>/[scene_name]/[source_name]/visible [0 or 1]</code></strong></p>
+<ul>
+<li>turn on or off the source's visibility.
+<ul>
+<li><em>Example:</em> <code>/Webcam_1/Audio_Input_Capture/visible 0</code> will turn OFF &quot;Audio Input Capture&quot; source in OBS from scene &quot;Webcam 1&quot;. Where as <code>/Webcam_1/Text_1/visible 1</code> will turn it ON.</li>
+<li><em>NOTE:</em> If a scene name or source name contains a SPACE, replace with &quot;_&quot;, so if OBS has a scene &quot;Webcam 1&quot; and a source name of &quot;Text 1&quot; make OSC message the example from above.</li>
+</ul>
+</li>
+</ul>
+<h1 id=""></h1>
+<h2 id="set-filter-visibility-onoff"><strong>- Set Filter Visibility On/Off: -</strong></h2>
+<h1 id=""></h1>
+<p><strong><code>/[scene_name]/[source_name]/filterVisibility [0 or 1]</code></strong></p>
+<ul>
+<li>turn on or off the source's filter visibility.
+<ul>
+<li><em>Example:</em> <code>/Video_Input/Color_Correction/filterVisibiltity 0</code> will turn OFF filter named &quot;Color Correction&quot; in OBS from source &quot;Video Input&quot;. Where as <code>/Video_Input/Color_Correction/filterVisibility 1</code> will turn it ON.</li>
+<li><em>Note:</em> If a filter name or source name contains a SPACE, replace with &quot;_&quot;, so if OBS has a filter &quot;Color Correction&quot; and a source name of &quot;Video Input&quot; make OSC message the example from above.</li>
+</ul>
+</li>
+</ul>
+<h1 id=""></h1>
+<h2 id="set-opacity"><strong>- Set Opacity: -</strong></h2>
+<h1 id=""></h1>
+<p><strong><code>/[source_name]/[color_correction_filter_name]/opacity [0 thru 100]</code></strong></p>
+<ul>
+<li>adjust the Opacity of a source via the &quot;Color Correction&quot; filter in OBS of the current scene.
+<ul>
+<li><em>Example:</em> <code>/Text_1/Color_Correction/opacity 0.5</code> will make &quot;Text 1&quot; half transparent.</li>
+<li><em>Note:</em> If a source name or filter name contains a SPACE, replace with &quot;_&quot;, so if OBS has a source &quot;Text 1&quot; and filter &quot;Color Correction&quot; make OSC message the example from above)</li>
+</ul>
+</li>
+</ul>
+<h1 id=""></h1>
+<h2 id="set-%22color-correction%22-filter-properties"><strong>- Set &quot;Color Correction&quot; Filter Properties: -</strong></h2>
+<h1 id=""></h1>
+<h3 id="gamma">Gamma</h3>
+<p><strong><code>/[source_name]/[color_correction_filter_name]/gamma [-3 thru 3]</code></strong></p>
+<ul>
+<li>Adjust the Gamma of a source via the &quot;Color Correction&quot; filter in OBS of the current scene.
+<ul>
+<li><code>0</code> is the default vaule</li>
+<li><em>Example:</em> <code>/Text_1/Color_Correction/gamma 3</code> will make &quot;Text 1&quot; gamma at highest setting.</li>
+<li><em>Note:</em> If a source name or filter name contains a SPACE, replace with &quot;_&quot;, so if OBS has a source &quot;Text 1&quot; and filter &quot;Color Correction&quot; make OSC message the example from above)</li>
+</ul>
+</li>
+</ul>
+<h3 id="contrast">Contrast</h3>
+<p><strong><code>/[source_name]/[color_correction_filter_name]/contrast [-2 thru 2]</code></strong></p>
+<ul>
+<li>Adjust the Contrast of a source via the &quot;Color Correction&quot; filter in OBS of the current scene.
+<ul>
+<li><code>0</code> is the default vaule</li>
+<li><em>Example:</em> <code>/Text_1/Color_Correction/contrast 2</code> will make &quot;Text 1&quot; contrast at highest setting.</li>
+<li><em>Note:</em> If a source name or filter name contains a SPACE, replace with &quot;_&quot;, so if OBS has a source &quot;Text 1&quot; and filter &quot;Color Correction&quot; make OSC message the example from above)</li>
+</ul>
+</li>
+</ul>
+<h3 id="brightness">Brightness</h3>
+<p><strong><code>/[source_name]/[color_correction_filter_name]/brightness [-1 thru 1]</code></strong></p>
+<ul>
+<li>Adjust the Brightness of a source via the &quot;Color Correction&quot; filter in OBS of the current scene.
+<ul>
+<li><code>0</code> is the default vaule</li>
+<li><em>Example:</em> <code>/Text_1/Color_Correction/brightness 1</code> will make &quot;Text 1&quot; brightness at highest setting.</li>
+<li><em>Note:</em> If a source name or filter name contains a SPACE, replace with &quot;_&quot;, so if OBS has a source &quot;Text 1&quot; and filter &quot;Color Correction&quot; make OSC message the example from above)</li>
+</ul>
+</li>
+</ul>
+<h3 id="saturation">Saturation</h3>
+<p><strong><code>/[source_name]/[color_correction_filter_name]/saturation [-1 thru 5]</code></strong></p>
+<ul>
+<li>Adjust the Contrast of a source via the &quot;Color Correction&quot; filter in OBS of the current scene.
+<ul>
+<li><code>0</code> is the default vaule</li>
+<li><em>Example:</em> <code>/Text_1/Color_Correction/contrast 5</code> will make &quot;Text 1&quot; saturation at highest setting.</li>
+<li><em>Note:</em> If a source name or filter name contains a SPACE, replace with &quot;_&quot;, so if OBS has a source &quot;Text 1&quot; and filter &quot;Color Correction&quot; make OSC message the example from above)</li>
+</ul>
+</li>
+</ul>
+<h3 id="hue-shift">Hue Shift</h3>
+<p><strong><code>/[source_name]/[color_correction_filter_name]/hueShift [-180 thru 180]</code></strong></p>
+<ul>
+<li>Adjust the Contrast of a source via the &quot;Color Correction&quot; filter in OBS of the current scene.
+<ul>
+<li><code>0</code> is the default vaule</li>
+<li><em>Example:</em> <code>/Text_1/Color_Correction/contrast 180</code> will make &quot;Text 1&quot; hue shift at highest setting.</li>
+<li><em>Note:</em> If a source name or filter name contains a SPACE, replace with &quot;_&quot;, so if OBS has a source &quot;Text 1&quot; and filter &quot;Color Correction&quot; make OSC message the example from above)</li>
+</ul>
+</li>
+</ul>
+<h1 id=""></h1>
+<h2 id="translate-sources-position"><strong>- Translate Source's Position: -</strong></h2>
+<h1 id=""></h1>
+<p><strong><code>/[scene_name]/[source_name]/position [x] [y] </code></strong></p>
+<ul>
+<li>change sources position by x and y values. This also changes the alignment to center the bounding box to the x and y values.
+<ul>
+<li><em>Example:</em> <code>/Webcam_1/Text_1/position 0 0</code> this changes the source to center of the screen, as long as the alignment is cewnter. See &quot;Qlab OSC Examples&quot; file for how to automate positions.</li>
+<li><em>Note:</em> This is only tested for a &quot;Canvas Size&quot; of 1920x1080 in OBS. Also, If a scene name or source name contains a SPACE, replace with &quot;_&quot;, so if OBS has a scene &quot;Webcam 1&quot; and a source name of &quot;Text 1&quot; make OSC message the example from above.</li>
+</ul>
+</li>
+</ul>
+<h1 id=""></h1>
+<h2 id="translate-sources-scale"><strong>- Translate Source's Scale: -</strong></h2>
+<h1 id=""></h1>
+<p><strong><code>/[scene_name]/[source_name]/scale [float]</code></strong></p>
+<ul>
+<li>change the source's scale. <code>0</code> is nothing, <code>1</code> is original full size. Negative numbers will invert the source. Numbers larger than &quot;1&quot; will be larger than original size.
+<ul>
+<li><em>Example:</em> <code>/Webcam_1/Text_1/scale 2</code> this will make the size of the &quot;Text 1&quot; source double the size of original.</li>
+<li><em>Note:</em> See &quot;Qlab OSC Examples&quot; file for how to automate scale. Also, If a scene name or source name contains a SPACE, replace with &quot;_&quot;, so if OBS has a scene &quot;Webcam 1&quot; and a source name of &quot;Text 1&quot; make OSC message the example from above.)</li>
+</ul>
+</li>
+</ul>
+<h1 id=""></h1>
+<h2 id="translate-sources-rotation"><strong>- Translate Source's Rotation: -</strong></h2>
+<h1 id=""></h1>
+<p><strong><code>/[scene_name]/[source_name]/rotate [float]</code></strong></p>
+<ul>
+<li>change the source's scale. <code>0</code> is nothing, <code>360</code> is full 360 rotation clockwise. Negative numbers will rotate counterclockwise. Numbers larger than &quot;360&quot; will be more roations.
+<ul>
+<li><em>Example:</em> <code>/Webcam_1/Text_1/rotate 90</code> this will make the rotation of the &quot;Text 1&quot; source 90º clockwise.</li>
+<li><em>Note:</em> See &quot;Qlab OSC Examples&quot; file for how to automate rotation. Also, If a scene name or source name contains a SPACE, replace with &quot;_&quot;, so if OBS has a scene &quot;Webcam 1&quot; and a source name of &quot;Text 1&quot; make OSC message the example from above.)</li>
+</ul>
+</li>
+</ul>
+<h1 id=""></h1>
+<h2 id="audio-controls"><strong>- Audio Controls: -</strong></h2>
+<h1 id=""></h1>
+<h3 id="mute">Mute</h3>
+<p><strong><code>/[source_name]/mute</code></strong></p>
+<ul>
+<li>Mute the specified source</li>
+</ul>
+<h3 id="unmute">Unmute</h3>
+<p><strong><code>/[source_name]/unmute</code></strong></p>
+<ul>
+<li>Unmute the specified source</li>
+</ul>
+<h3 id="volume">Volume</h3>
+<p><strong><code>/[source_name]/volume [0 thru 1]</code></strong></p>
+<ul>
+<li>Adjust specified source's volume.
+<ul>
+<li><em>Example:</em> <code>/Audio_Input/volume 0.5</code> sets source &quot;Audio_Input&quot; audio to 50% volume</li>
+</ul>
+</li>
+</ul>
+<h3 id="monitor-off">Monitor Off</h3>
+<p><strong><code>/[source_name]/monitorOff</code></strong></p>
+<ul>
+<li>Sets source's audio monitor type to &quot;Monitor Off&quot;
+<ul>
+<li><em>Example:</em> <code>/Audio_Input/monitorOff</code> sets audio source &quot;Audio Input&quot; to &quot;Monitor Off&quot;.</li>
+<li><em>Note:</em> This does work, but you won't see a visual change on OBS unless you close &quot;Advaced Audio&quot; window and reopen.</li>
+</ul>
+</li>
+</ul>
+<h3 id="monitor-only">Monitor Only</h3>
+<p><strong><code>/[source_name]/monitorOnly</code></strong></p>
+<ul>
+<li>Sets source's audio monitor type to &quot;Monitor Only&quot;
+<ul>
+<li><em>Example:</em> <code>/Audio_Input/monitorOnly</code> sets audio source &quot;Audio Input&quot; to &quot;Monitor Only&quot;.</li>
+<li><em>Note:</em> This does work, but you won't see a visual change on OBS unless you close &quot;Advaced Audio&quot; window and reopen.</li>
+</ul>
+</li>
+</ul>
+<h3 id="monitor-and-output">Monitor and Output</h3>
+<p><strong><code>/[source_name]/monitorAndOutput</code></strong></p>
+<ul>
+<li>Sets source's audio monitor type to &quot;Monitor and Output&quot;
+<ul>
+<li><em>Example:</em> <code>/Audio_Input/monitorAndOutput</code> sets audio source &quot;Audio Input&quot; to &quot;Monitor and Output&quot;.</li>
+<li><em>Note:</em> This does work, but you won't see a visual change on OBS unless you close &quot;Advaced Audio&quot; window and reopen.</li>
+</ul>
+</li>
+</ul>
+<h1 id=""></h1>
+<h2 id="media-controls"><strong>- Media Controls: -</strong></h2>
+<h1 id=""></h1>
+<h3 id="play">Play</h3>
+<p><strong><code>/[source_name]/mediaPlay</code></strong></p>
+<ul>
+<li>Play specified &quot;Media Source&quot;</li>
+</ul>
+<h3 id="pause">Pause</h3>
+<p><strong><code>/[source_name]/mediaPause</code></strong></p>
+<ul>
+<li>Pause specified &quot;Media Source&quot;</li>
+</ul>
+<h3 id="restart">Restart</h3>
+<p><strong><code>/[source_name]/mediaRestart</code></strong></p>
+<ul>
+<li>Restart specified &quot;Media Source&quot;</li>
+</ul>
+<h3 id="stop">Stop</h3>
+<p><strong><code>/[source_name]/mediaStop</code></strong></p>
+<ul>
+<li>Stop specified &quot;Media Source&quot;</li>
+</ul>
+<h1 id=""></h1>
+<h2 id="browser-controls"><strong>- Browser Controls: -</strong></h2>
+<h1 id=""></h1>
+<p><strong><code>/[browser_source]/refreshBrowser</code></strong></p>
+<ul>
+<li>Refresh specified Browser Source in OBS</li>
+</ul>
+<h1 id=""></h1>
+<h2 id="projector-controls"><strong>- Projector Controls: -</strong></h2>
+<h1 id=""></h1>
+<p><strong><code>/[type]/openProjector [display_number] [sceneorsource_name]</code></strong></p>
+<ul>
+<li>Opens type of projector to specified display</li>
+<li><code>[type]</code> options:
+<ul>
+<li><code>StudioProgram</code>, <code>Multiview</code>, <code>Preview</code>, <code>Scene</code>, <code>Source</code></li>
+</ul>
+</li>
+<li><code>[display_number]</code> is an integer
+<ul>
+<li><em>Example:</em> <code>0</code> would be your main screen and <code>1</code> would be your secondary monitor</li>
+<li><em>Note:</em> If you use <code>-1</code> or empty(<code>null</code>), then this would make a windowed projector of specified <code>[type]</code></li>
+</ul>
+</li>
+<li><code>[sceneorsource_name]</code> is an <strong>optional</strong> for the 2nd argument. This can <strong>ONLY</strong> be used if using <code>Scene</code> or <code>Source</code> for <code>[type]</code>
+<ul>
+<li>This would be the name of a Source or Scene in OBS that would open a specified projector</li>
+</ul>
+</li>
+<li><em>Examples:</em>
+<ul>
+<li><code>/StudioProgram/openProjector 1</code>
+<ul>
+<li>This would open a Studio Program Feed on the secondary monitor</li>
+</ul>
+</li>
+<li><code>/Preview/openProjector</code>
+<ul>
+<li>This would open a Preview Feed in a windowed projector</li>
+</ul>
+</li>
+<li><code>/Scene/openProjector 0 &quot;Scene 1&quot;</code>
+<ul>
+<li>This would open a feed from &quot;Scene 1&quot; on the main monitor.</li>
+</ul>
+</li>
+<li><code>/Multiview/openProjector -1</code>
+<ul>
+<li>This would open a Multiview Feed to a windowed projector</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id=""></h1>
+<h2 id="studio-mode"><strong>- Studio Mode: -</strong></h2>
+<h1 id=""></h1>
+<h3 id="enable">Enable</h3>
+<p><strong><code>/enableStudioMode</code></strong></p>
+<ul>
+<li>enable Studio Mode in OBS</li>
+</ul>
+<h3 id="disable">Disable</h3>
+<p><strong><code>/disableStudioMode</code></strong></p>
+<ul>
+<li>disable Studio Mode in OBS</li>
+</ul>
+<h3 id="toggle">Toggle</h3>
+<p><strong><code>/toggleStudioMode</code></strong></p>
+<ul>
+<li>toggle Studio Mode On/Off in OBS</li>
+</ul>
+<h1 id=""></h1>
+<h2 id="streaming-and-recording"><strong>- Streaming and Recording: -</strong></h2>
+<h1 id=""></h1>
+<h3 id="start-recording">Start Recording</h3>
+<p><strong><code>/startRecording</code></strong></p>
+<ul>
+<li>start recording in OBS</li>
+</ul>
+<h3 id="stop-recording">Stop Recording</h3>
+<p><strong><code>/stopRecording</code></strong></p>
+<ul>
+<li>stop recording in OBS</li>
+</ul>
+<h3 id="toggle-recording">Toggle Recording</h3>
+<p><strong><code>/toggleRecording</code></strong></p>
+<ul>
+<li>toggle the start/stop recording button in OBS</li>
+</ul>
+<h3 id="pause-recording">Pause Recording</h3>
+<p><strong><code>/pauseRecording</code></strong></p>
+<ul>
+<li>pause the recording in OBS</li>
+</ul>
+<h3 id="resume-recording">Resume Recording</h3>
+<p><strong><code>/resumeRecording</code></strong></p>
+<ul>
+<li>resume recording in OBS</li>
+</ul>
+<h3 id="start-streaming">Start Streaming</h3>
+<p><strong><code>/startStreaming</code></strong></p>
+<ul>
+<li>start streaming in OBS</li>
+</ul>
+<h3 id="stop-streaming">Stop Streaming</h3>
+<p><strong><code>/stopStreaming</code></strong></p>
+<ul>
+<li>stop streaming in OBS</li>
+</ul>
+<h3 id="toggle-streaming">Toggle Streaming</h3>
+<p><strong><code>/toggleStreaming</code></strong></p>
+<ul>
+<li>toggle the start/stop streaming button in OBS</li>
+</ul>
+<h1 id=""></h1>
+<h2 id="editing-commands-while-selected-in-obs"><strong>~ Editing Commands While Selected in OBS: ~</strong></h2>
+<h1 id=""></h1>
+<p><em>Mainly used for <strong><a href="https://hexler.net/products/touchosc">TouchOSC</a></strong></em></p>
+<ul>
+<li><em>Layout file included in downloaded folder or in Assets on Github</em></li>
+<li>Download and install <a href="https://hexler.net/products/touchosc">TouchOSC Editor</a> to open &quot;Layout&quot; and import to device</li>
+</ul>
+<h3 id="add-scene-item">Add Scene Item</h3>
+<p><strong><code>/addSceneItem [scene_item]</code></strong></p>
+<ul>
+<li>This adds a specified &quot;Scene Item&quot; to the <strong>selected</strong> OBS Scene
+<ul>
+<li><em>Note:</em> You can find a list of all your &quot;Scene Items&quot; by clicking on the toolbar:
+<ul>
+<li><em>Scripts &gt; Log All Available Scene Items (Sources)</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="change-transition-override-type">Change Transition Override Type</h3>
+<p><strong><code>/transOverrideType/[type]</code></strong></p>
+<ul>
+<li>Set Transition Override Type for <strong>selected</strong> OBS Scene.
+<ul>
+<li><em>Note:</em> <code>[type]</code> must be identical to Transition Override Type name in OBS:</li>
+<li><code>Fade</code>, <code>Cut</code>, <code>Stinger</code>, <code>Fade_to_Color</code>, <code>Luma_Wipe</code>, <code>Slide</code>, <code>Swipe</code>, and a <code>Custom Named</code> Transition. This also works with the <code>Move</code> <a href="https://obsproject.com/forum/resources/move-transition.913/">plugin</a>.</li>
+<li><em>Example:</em> <code>/transOverrideType/Fade_to_Color</code> will set the Transition Override of the <strong>selected</strong> Scene in OBS to &quot;Fade to Color&quot;</li>
+</ul>
+</li>
+</ul>
+<h3 id="change-transition-override-duration">Change Transition Override Duration</h3>
+<p><strong><code>/transOverrideDuration [duration]</code></strong></p>
+<ul>
+<li>Set Transition Override Duration for <strong>selected</strong> OBS Scene.</li>
+<li><em>Note:</em> Duration is in milliseconds (1000ms = 1sec)</li>
+<li><em>Example:</em> <code>/transOverrideDuration 2500</code> will set the Transition Override duration for the <strong>selected</strong> Scene in OBS to 2.5 seconds.</li>
+</ul>
+<h3 id="change-scale">Change Scale</h3>
+<p><strong><code>/size [float]</code></strong></p>
+<ul>
+<li>Translate scale of <strong>selected</strong> OBS Source.
+<ul>
+<li><code>[float]</code> can take a value with decimal.
+<ul>
+<li><em>Example:</em> <code>0</code> is nothing, <code>0.5</code> is half the size, <code>1</code> is original full size. Negative numbers will invert the source. Numbers more than &quot;1&quot; will be larger than original size.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="change-position-x-and-y">Change Position X and Y</h3>
+<p><strong><code>/move [x] [y]</code></strong></p>
+<ul>
+<li>Translate X and Y position from <strong>selected</strong> OBS Source.</li>
+</ul>
+<h3 id="change-position-x">Change Position X</h3>
+<p><strong><code>/movex [x]</code></strong></p>
+<ul>
+<li>Translate X position from <strong>selected</strong> OBS Source.</li>
+</ul>
+<h3 id="change-position-y">Change Position Y</h3>
+<p><strong><code>/movey [y]</code></strong></p>
+<ul>
+<li>Translate Y position from <strong>selected</strong> OBS Source.</li>
+</ul>
+<h3 id="change-alignment">Change Alignment</h3>
+<p><strong><code>/align [int]</code></strong></p>
+<ul>
+<li>Set alignment for <strong>selected</strong> source.
+<ul>
+<li>
+<p><em>Example:</em> <code>/align 0</code> will center the <strong>selected</strong> OBS Source</p>
+</li>
+<li>
+<p><code>[int]</code> would be an integer value from this guide:</p>
+<table>
+<thead>
+<tr>
+<th>10</th>
+<th>8</th>
+<th>9</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>6</td>
+<td>4</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id=""></h1>
+<h1 id="obs---application">OBS -&gt; Application:</h1>
+<ul>
+<li>
+<p>Configure &quot;OSC OUT&quot; to target Application</p>
+</li>
+<li>
+<p>When <em>Enabled</em> his allows OBS to send OSC to other applications when a scene is activated.</p>
+</li>
+<li>
+<p>To <strong>use/enable</strong> this function, change the toggle button to ON
+Configure the prefix and suffix for how you want your OSC application to receive an OSC string from OBS</p>
+<ul>
+<li><em>Example:</em> In OBS when a Scene named &quot;Wide&quot; is activated, Qlab recieves an OSC message &quot;<strong>/cue/Wide/start</strong>&quot;)</li>
+<li><em>Note:</em> This currently does NOT support any spaces.</li>
+</ul>
+</li>
+</ul>
+</body>
+</html>

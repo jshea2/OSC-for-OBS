@@ -1,0 +1,191 @@
+html {
+  width: 100vw;
+  height: 100vh;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  padding: 3%;
+  overflow: hidden;
+  background: rgb(20, 20, 20);
+  display: flex;
+  justify-content: center;
+  color: white;
+}
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 14px;
+  line-height: 0.95;
+  padding:  0 30px 0 30px;
+}
+.label {
+  font-size: 50px;
+  font-weight: 200;
+  color: rgb(239, 255, 176);
+}
+.label2 {
+  font-size: 20px;
+  font-weight: 200;
+  color: rgb(239, 255, 176);
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 27px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #d15b5b;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 17px;
+  width: 17px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #6cda73;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(66px);
+  -ms-transform: translateX(66px);
+  transform: translateX(66px);
+}
+
+/*------ ADDED CSS ---------*/
+.on
+{
+  display: none;
+}
+
+.on, .off
+{
+  color: white;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  font-size: 10px;
+  font-family: Verdana, sans-serif;
+}
+
+input:checked+ .slider .on
+{display: block;}
+
+input:checked + .slider .off
+{display: none;}
+
+/*--------- END --------*/
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;}
+
+  .button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: rgb(237, 255, 163);
+    border: none;
+    color: #000000;
+    text-align: center;
+    font-size: 15px;
+    padding: 20px;
+    width: 150px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 3px;
+  }
+  
+  .button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  .button:hover span {
+    padding-right: 25px;
+  }
+  
+  .button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+
+  .dotGrey {
+    height: 20px;
+    width: 20px;
+    background-color: #bbb;
+    border-radius: 50%;
+    position:absolute;
+    bottom:0;
+    right:0;
+  }
+
+  .dotGreen {
+    height: 20px;
+    width: 20px;
+    background-color: rgb(0, 255, 0);
+    border-radius: 50%;
+    position:absolute;
+    bottom:0;
+    right:0;
+  }
+
+  .dotRed {
+    height: 20px;
+    width: 20px;
+    background-color: rgb(255, 0, 0);
+    border-radius: 50%;
+    position:absolute;
+    bottom:0;
+    right:0;
+  }

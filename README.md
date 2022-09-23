@@ -4,12 +4,12 @@
 ![OSCforOBS copySmall](https://user-images.githubusercontent.com/70780576/109406368-3c793e00-792d-11eb-90f0-bca884b79e80.png)
 
 ## Setup
-*Requires: [obs-websocket plugin](https://github.com/Palakis/obs-websocket/releases) for OBS (v4.9 and up)*
+*Requires: [obs-websocket plugin](https://github.com/Palakis/obs-websocket/releases) v5.0 and above (This is included in OBS v28)*
 
-* NOTE: obs-websocket alpha 5.0 has not been tested
+* NOTE:  *[Download *OSC for OBS (v2.7.1)* if you're using obs-websocket v4.9 and lower](https://github.com/jshea2/OBSosc/releases)*
 
-## [Download *OSC for OBS (v2.7.1)* Now](https://github.com/jshea2/OBSosc/releases)
-<img width="350" alt="Screen Shot 2021-11-21 at 4 17 23 PM" src="https://user-images.githubusercontent.com/70780576/142785474-3b6a817c-cd54-4a32-9020-da0d54e9925b.png">
+
+<img width="350" alt="Screen Shot 2021-11-21 at 4 17 23 PM" src="https://user-images.githubusercontent.com/70780576/191876659-ebf6c5eb-40da-4725-ba50-1ac28658c377.png">
 
 
 - [Download *OSC for OBS*](https://github.com/jshea2/OBSosc/releases)   

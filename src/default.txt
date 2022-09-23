@@ -8,6 +8,6 @@ false
 127.0.0.1
 53000
 /cue/
-false
+/start
 false
 false

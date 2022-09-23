@@ -1,7 +1,7 @@
 {
   "name": "obsosc-app",
   "productName": "OSC for OBS",
-  "version": "2.7.1",
+  "version": "3.0.0",
   "description": "Control OBS via OSC",
   "main": "src/index.js",
   "scripts": {
@@ -64,9 +64,10 @@
   "dependencies": {
     "electron-pdf-window": "^1.0.12",
     "electron-squirrel-startup": "^1.0.0",
+    "electronmon": "^2.0.2",
     "node-keys-simulator": "^1.0.0",
     "node-osc": "6.0.0-rc.2",
-    "obs-websocket-js": "^4.0.2"
+    "obs-websocket-js": "^5.0.1"
   },
   "devDependencies": {
     "create-electron-app": "^1.0.0",

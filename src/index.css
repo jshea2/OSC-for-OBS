@@ -9,7 +9,7 @@ body {
   height: 100%;
   padding: 3%;
   overflow: hidden;
-  background: rgb(20, 20, 20);
+  background: rgb(25,27,37);
   display: flex;
   justify-content: center;
   color: white;
@@ -26,12 +26,12 @@ body {
 .label {
   font-size: 50px;
   font-weight: 200;
-  color: rgb(239, 255, 176);
+  color: rgb(161, 184, 255);
 }
 .label2 {
   font-size: 20px;
   font-weight: 200;
-  color: rgb(239, 255, 176);
+  color: rgb(185, 202, 255);
 }
 .switch {
   position: relative;
@@ -116,9 +116,9 @@ input:checked + .slider .off
   .button {
     display: inline-block;
     border-radius: 4px;
-    background-color: rgb(237, 255, 163);
+    background-color: rgb(41,77,183);
     border: none;
-    color: #000000;
+    color: #ffffff;
     text-align: center;
     font-size: 15px;
     padding: 20px;

@@ -124,7 +124,7 @@ Value `0` to `1`
 #
 ## **- Set Opacity: -**
 #
-**`/[source_name]/[color_correction_filter_name]/opacity [0 thru 100]`** 
+**`/[source_name]/[color_correction_filter_name]/opacity [0 thru 1]`** 
 - adjust the Opacity of a source via the "Color Correction" filter in OBS of the current scene.
   - *Example:* `/Text_1/Color_Correction/opacity 0.5` will make "Text 1" half transparent. 
   - *Note:* If a source name or filter name contains a SPACE, replace with "_", so if OBS has a source "Text 1" and filter "Color Correction" make OSC message the example from above)
@@ -245,6 +245,10 @@ Value `0` to `1`
 ### Stop
 **`/[source_name]/mediaStop`**
 - Stop specified "Media Source"
+
+### Cursor
+**`/[source_name]/mediaCursor [int]`**
+- Sets the cursor position of specified "Media Source"
 #
 ## **- Browser Controls: -**
 #
@@ -456,6 +460,12 @@ Value `0` to `1`
 -`/takeScreenshot`
    - This saves a .png file of your current active scene and saves it to your *Documents* folder
 
+### Trigger Hotkey
+-`/[modifier]/[key]/hotkey`
+  - This triggers a hotkey from your settings. Not keyboard shortcuts.
+  - `modifier` can be `shift` `control` and/or `alt` (order doesn't matter). `key` can be lowercase or uppercase.
+  - ex. `/controlshift/f/hotkey`
+
 ### Open External File / URL
 *Might ask to allow "OSC for OBS" access*
 - `/openExternal [string]`
@@ -469,7 +479,7 @@ Value `0` to `1`
     - opens 'texttest1.png' in default viewer (like Preview)
 
 ### Simulate Keypress on Front/Active Window *(BETA)*
-*(Java Run Time)[https://www.java.com/en/download/manual.jsp] is required for this feature*
+*(Java Run Time)[https://www.java.com/en/download/manual.jsp] is required for this feature. After downloading and installing restart computer.*
 - `/keypress [string]`
    - this command simulates a keypress on front window. (Use this syntax for keys)[https://github.com/garimpeiro-it/node-key-sender#list-of-key-codes]
    - ex. `/keypress "space"`
@@ -547,9 +557,10 @@ alt="NodeOBS-ZoomOSC-Autocropper DEMO Video" width="380" border="10" />
 **`/fitToScreen`**
 - Set bounds to Fit to Screen
 
-### Duplicate Current Scene
-**`/duplicateCurrentScene`**
-- Duplicates the current active OBS scene
+### Get Source Settings
+**`/getSourceSettings`**
+- Logs source properties and settings
+  - Mainly used for development and debugging
 
 #
 

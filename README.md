@@ -544,10 +544,10 @@ alt="NodeOBS-ZoomOSC-Autocropper DEMO Video" width="380" border="10" />
   - *Example:* `/align 0` will center the **selected** OBS Source
   - `[int]` would be an integer value from this guide:
 
-      | 10 | 8 | 9 |
+      | 5 | 4 | 6 |
       |----|---|---|
-      | 2 | 0 | 1 |
-      | 6 | 4 | 5 |
+      | 1 | 0 | 2 |
+      | 9 | 8 | 10 |
 
 ### Change Rotation
 **`/spin [int]`**

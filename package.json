@@ -1,7 +1,7 @@
 {
   "name": "obsosc-app",
   "productName": "OSC for OBS",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Control OBS via OSC",
   "main": "src/index.js",
   "scripts": {

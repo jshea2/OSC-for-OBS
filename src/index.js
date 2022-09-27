@@ -53,6 +53,17 @@ const createWindow = () => {
       nodeIntegration: true 
     }
   });
+
+  const createWindowOSCTest = () => {
+    const testWindow = new BrowserWindow({
+        width: 190,
+        height: 220,
+        webPreferences: {
+          nodeIntegration: true 
+        }
+      })
+      testWindow.loadFile(path.join(__dirname, 'osctester.html'));
+  }
   
 
 
@@ -116,6 +127,13 @@ const template = [
             }
           }
       },
+      { 
+        label: 'OSC Tester',
+        accelerator: 'CommandOrControl+T',
+        click(){
+            createWindowOSCTest();
+        } 
+    },
       { 
         label: 'Revert to Default Values', 
         accelerator: 'CommandOrControl+Shift+/',
@@ -505,7 +523,10 @@ setTimeout(() => {
   // Make file an array
   let openArray = fileContent.split('\n')
   if(openArray[0] !== "OBSosc Config File:"){
-      logEverywhere("Invalid File Type!")
+      logEverywhere("Invalid File Type! Loading Default Values")
+      mainWindow.setSize(windowSizeWidthPost,windowSizelHeight)
+      mainWindow.webContents.openDevTools()
+      openOriginalFile()
       return
   }
   //OBS IP
@@ -634,6 +655,7 @@ ipcMain.on("submitted", (event, data) => {
     console.log(data)
   })
 
+
   // Function that logs to the DevTools
   function logEverywhere(message) {
     if (mainWindow && mainWindow.webContents) {
@@ -711,7 +733,7 @@ ipcMain.on("obsConnect", (event, data) => {
 //Qlab AutoPopulate Function
 qlabCue = function createQlabCues() {
     obs.call('GetSceneList').then(data => {
-        data.scenes.forEach(i => {
+        data.scenes.slice().reverse().forEach(i => {
             client.send("/new", "network", "1", (err) => {
                 if (err) console.error(err);
                     })
@@ -732,7 +754,7 @@ listSceneItems = function listSceneItems(){
         logEverywhere("--- Available Scene Items: ---")
         // logEverywhere(data.sceneName)
         // logEverywhere(msg[1])
-        data.scenes.forEach(i => {
+        data.scenes.slice().reverse().forEach(i => {
             console.log(data)
             obs.call("GetSceneItemList", {
                 'sceneName': i.sceneName,
@@ -785,7 +807,7 @@ obs.on("MediaInputActionTriggered", data => {
 //Listen and Log When New Scene is Activated
 obs.on('CurrentProgramSceneChanged', data => {
     console.log(`New Active Scene: ${data.sceneName}`);
-    // logEverywhere(`New Active Scene: ${data.sceneName}`)
+    logEverywhere(`New Active Scene: ${data.sceneName}`)
 });
 
 let currentSceneItem
@@ -828,7 +850,7 @@ function connectOBS() {
     .then(data => {
         console.log(`\n${data.scenes.length} Available Scenes.` + "\n");    //Log Total Scenes
         logEverywhere(`\n${data.scenes.length} Available Scenes.` + "\n")
-        console.log(data.scenes.forEach((thing, index) => {
+        console.log(data.scenes.slice().reverse().forEach((thing, index) => {
             console.log((index + 1) + " - " + thing.sceneName);
             logEverywhere((index + 1) + " - " + thing.sceneName)                 //Log List of Available Scenes with OSC Index
         }));
@@ -898,6 +920,12 @@ server.on('bundle', function (bundle) {
 });
 }
 });
+
+  // From ipcMain.on from the OSC Tester HTML
+  ipcMain.on("oscMessage", (event, data) => {
+      console.log(data)
+    clientLoopback.send(data)
+})
 
 
 //OSC -> OBS
@@ -1108,13 +1136,29 @@ server.on('message', (msg) => {
     
     } 
     //Triggers Stop Recording
-    else if (msg[0] === "/stopRecord"){
-        obs.call("StopRecording").catch((err) => {
+    else if (msg[0] === "/stopRecording"){
+        obs.call("StopRecord").catch((err) => {
+            console.log(`ERROR: ${err.error}`)
+            logEverywhere(`ERROR: ${err}\nOSC Recieved: ${msg}`)
+        })
+    
+    }
+    //Triggers Start Recording
+    else if (msg[0] === "/pauseRecording"){
+        obs.call("PauseRecord").catch((err) => {
             console.log(`ERROR: ${err.error}`)
             logEverywhere(`ERROR: ${err}\nOSC Recieved: ${msg}`)
         })
     
     } 
+    //Triggers Stop Recording
+    else if (msg[0] === "/resumeRecording"){
+        obs.call("ResumeRecord").catch((err) => {
+            console.log(`ERROR: ${err.error}`)
+            logEverywhere(`ERROR: ${err}\nOSC Recieved: ${msg}`)
+        })
+    
+    }  
     //Triggers Toggle Recording
     else if (msg[0] === "/toggleRecording"){
         obs.call("ToggleRecord").catch((err) => {
@@ -1157,7 +1201,7 @@ server.on('message', (msg) => {
     } 
     //Triggers Toggle Streaming
     else if (msg[0] === "/toggleStreaming"){
-        obs.call("ToggleStreaming").catch((err) => {
+        obs.call("ToggleStream").catch((err) => {
             console.log(`ERROR: ${err.error}`)
             logEverywhere(`ERROR: ${err}\nOSC Recieved: ${msg}`)
         })
@@ -1496,20 +1540,42 @@ server.on('message', (msg) => {
         logEverywhere(`OSC IN: ${msg}`)
         var msgArray = msg[0].split("/")
         msgArray.shift()
-        var x = msg[1] + 960
-        var y = msg[2] - (msg[2] * 2)
-        getSceneItemId(msgArray[0], msgArray[1])
-        obs.call("GetSceneItemTransform", {
-            'sceneName' : msgArray[0].toString().split('_').join(' '),
-            'sceneItemId': getSceneItemIdValue
-        })
-        obs.call("SetSceneItemTransform", {
-            'sceneName': msgArray[0].toString().split('_').join(' '),
-            'sceneItemId': getSceneItemIdValue,
-            'position': { 'x': x, 'y': y + 540}
-        }).catch(() => {
-            console.log("ERROR: Invalid Position Syntax")
-            logEverywhere("ERROR: Invalid Position Name. See Help > API")
+        var x = msg[1] //+ 960
+        var y = msg[2] //- (msg[2] * 2)
+        let getSceneItemIdValue
+        obs.call("GetSceneItemId", {
+            sceneName: msgArray[0].split('_').join(' ').toString(),
+            sourceName: msgArray[1].split('_').join(' ').toString()
+        }).then(data => {
+            console.log(data)
+            getSceneItemIdValue = data.sceneItemId
+            let canvasW
+            let canvasH
+            obs.call("GetVideoSettings").then(data => {
+                canvasW = data.baseWidth
+                canvasH = data.baseHeight
+                obs.call("SetSceneItemTransform", {
+                    'sceneName': msgArray[0].toString().split('_').join(' '),
+                    'sceneItemId': getSceneItemIdValue,
+                    sceneItemTransform: {
+                        'positionX': x + (canvasW / 2), 
+                        'positionY': y + (canvasH / 2)
+                    }
+                }).catch(() => {
+                    console.log("ERROR: Invalid Position Syntax")
+                    logEverywhere("ERROR: Invalid Position Name. See Help > API")
+                })
+            }).catch(error => {
+                console.log("Couldn't get scene index")
+            })
+            obs.call("GetSceneItemTransform", {
+                'sceneName' : msgArray[0].toString().split('_').join(' '),
+                'sceneItemId': getSceneItemIdValue
+            }).then(data => {
+                console.log(data)
+            })
+        }).catch(error => {
+            console.log("Couldn't get scene index")
         })
     }
     //Source Scale Translate
@@ -1518,14 +1584,31 @@ server.on('message', (msg) => {
         logEverywhere(`OSC IN: ${msg}`)
         var msgArray = msg[0].split("/")
         msgArray.shift()
-        var visible;
-        obs.call("SetSceneItemProperties", {
-            'sceneName': msgArray[0].split('_').join(' ').toString(),
-            'item': msgArray[1].split('_').join(' ').toString(),
-            'scale': { 'x': msg[1], 'y': msg[1]}
-        }).catch(() => {
-            console.log("Error: Invalid Scale Syntax. Make Sure There Are NO SPACES in Scene Name and Source Name. /[Scene Name]/[Source Name]/visible 0 or 1, example: /Wide/VOX/visible 1")
-            logEverywhere("ERROR: Invalid Scale Syntax. See Help > API")
+        let getSceneItemIdValue
+        obs.call("GetSceneItemId", {
+            sceneName: msgArray[0].split('_').join(' ').toString(),
+            sourceName: msgArray[1].split('_').join(' ').toString()
+        }).then(data => {
+            console.log(data)
+            getSceneItemIdValue = data.sceneItemId
+                obs.call("SetSceneItemTransform", {
+                    'sceneName': msgArray[0].toString().split('_').join(' '),
+                    'sceneItemId': getSceneItemIdValue,
+                    sceneItemTransform: {
+                        'scaleX': msg[1], 
+                        'scaleY': msg[1]
+                    }
+                }).catch(error => {
+                console.log("Couldn't get scene index")
+            })
+            obs.call("GetSceneItemTransform", {
+                'sceneName' : msgArray[0].toString().split('_').join(' '),
+                'sceneItemId': getSceneItemIdValue
+            }).then(data => {
+                console.log(data)
+            })
+        }).catch(error => {
+            console.log("Couldn't get scene index")
         })
     } 
     //Source Rotation Translate
@@ -1534,15 +1617,65 @@ server.on('message', (msg) => {
         logEverywhere(`OSC IN: ${msg}`)
         var msgArray = msg[0].split("/")
         msgArray.shift()
-        obs.call("SetSceneItemProperties", {
-            'sceneName': msgArray[0].split('_').join(' ').toString(),
-            'item': msgArray[1].split('_').join(' ').toString(),
-            'rotation': msg[1]
-        }).catch(() => {
-            console.log("Error: Invalid Rotation Syntax. Make Sure There Are NO SPACES in Scene Name and Source Name. /[Scene Name]/[Source Name]/rotate 0 or 1, example: /Wide/VOX/rotate 1")
-            logEverywhere("Error: Invalid Rotation Syntax. See Help > API")
+        let getSceneItemIdValue
+        obs.call("GetSceneItemId", {
+            sceneName: msgArray[0].split('_').join(' ').toString(),
+            sourceName: msgArray[1].split('_').join(' ').toString()
+        }).then(data => {
+            console.log(data)
+            getSceneItemIdValue = data.sceneItemId
+                obs.call("SetSceneItemTransform", {
+                    'sceneName': msgArray[0].toString().split('_').join(' '),
+                    'sceneItemId': getSceneItemIdValue,
+                    sceneItemTransform: {
+                        'rotation': msg[1],
+                    }
+                }).catch(error => {
+                console.log("Couldn't get scene index")
+            })
+            obs.call("GetSceneItemTransform", {
+                'sceneName' : msgArray[0].toString().split('_').join(' '),
+                'sceneItemId': getSceneItemIdValue
+            }).then(data => {
+                console.log(data)
+            })
+        }).catch(error => {
+            console.log("Couldn't get scene index")
         })
     }  
+
+    //Source Alignment
+    else if (msg[0].includes('alignment')){
+        console.log(`OSC IN: ${msg}`)
+        logEverywhere(`OSC IN: ${msg}`)
+        var msgArray = msg[0].split("/")
+        msgArray.shift()
+        let getSceneItemIdValue
+        obs.call("GetSceneItemId", {
+            sceneName: msgArray[0].split('_').join(' ').toString(),
+            sourceName: msgArray[1].split('_').join(' ').toString()
+        }).then(data => {
+            console.log(data)
+            getSceneItemIdValue = data.sceneItemId
+                obs.call("SetSceneItemTransform", {
+                    'sceneName': msgArray[0].toString().split('_').join(' '),
+                    'sceneItemId': getSceneItemIdValue,
+                    sceneItemTransform: {
+                        'alignment': msg[1],
+                    }
+                }).catch(error => {
+                console.log("Couldn't get scene index")
+            })
+            obs.call("GetSceneItemTransform", {
+                'sceneName' : msgArray[0].toString().split('_').join(' '),
+                'sceneItemId': getSceneItemIdValue
+            }).then(data => {
+                console.log(data)
+            })
+        }).catch(error => {
+            console.log("Couldn't get scene index")
+        })
+    } 
 
     //Triggers Source UnMute
     else if (msg[0].includes('unmute')){
@@ -1853,17 +1986,21 @@ server.on('message', (msg) => {
         logEverywhere(`OSC IN: ${msg}`)
         var msgArray = msg[0].split("/")
         msgArray.shift()
-        var x = Math.floor((msg[2]*2000))
+        var x = Math.floor((msg[2]*2000)+540)
         var y = Math.floor((msg[1]*2000) + 960)
         console.log(x + " " + y)
         logEverywhere(x + " " + y)
+        let currentProgramSceneName = data.currentProgramSceneName
+        console.log(`${currentProgramSceneName} ${currentSceneItem[0].sceneItemId}`)
         obs.call("SetSceneItemTransform", {
-            'sceneName': data.currentProgramSceneName,
-            'sceneItemId': sceneItemId,
-            'position': { 'x': x + 540, 'y': y, 'alignment': 0}
-        }).catch(() => {
-            console.log("ERROR: Invalis Position Syntax")
-            logEverywhere("ERROR: Invalid Move Syntax. See Help > API")
+            'sceneName': currentProgramSceneName.toString().split('_').join(' '),
+            'sceneItemId': currentSceneItem[0].sceneItemId,
+            sceneItemTransform: {
+                'positionX': x,
+                'positionY': y
+            }
+        }).catch(error => {
+        console.log("Couldn't get scene index")
         })
     })
     }
@@ -1874,17 +2011,20 @@ server.on('message', (msg) => {
         logEverywhere(`OSC IN: ${msg}`)
         var msgArray = msg[0].split("/")
         msgArray.shift()
-        var x = Math.floor((msg[1]*2000))
+        var x = Math.floor((msg[1]*2000)+540)
         var y = Math.floor((msg[1]*2000) + 960)
         console.log(x + " " + y)
         logEverywhere(x + " " + y)
+        let currentProgramSceneName = data.currentProgramSceneName
+        console.log(`${currentProgramSceneName} ${currentSceneItem[0].sceneItemId}`)
         obs.call("SetSceneItemTransform", {
-            'sceneName': data.currentProgramSceneName,
-            'item': sceneItemId,
-            'position': { 'x': x + 540, 'alignment': 0}
-        }).catch(() => {
-            console.log("ERROR: Invalis Position Syntax")
-            logEverywhere("ERROR: Invalid Move X Syntax. See Help > API")
+            'sceneName': currentProgramSceneName.toString().split('_').join(' '),
+            'sceneItemId': currentSceneItem[0].sceneItemId,
+            sceneItemTransform: {
+                'positionX': x
+            }
+        }).catch(error => {
+        console.log("Couldn't get scene index")
         })
     })
     }
@@ -1899,13 +2039,16 @@ server.on('message', (msg) => {
         var y = Math.floor((msg[1]*2000) + 960)
         console.log(x + " " + y)
         logEverywhere(x + " " + y)
+        let currentProgramSceneName = data.currentProgramSceneName
+        console.log(`${currentProgramSceneName} ${currentSceneItem[0].sceneItemId}`)
         obs.call("SetSceneItemTransform", {
-            'sceneName': data.currentProgramSceneName,
-            'sceneItemId': sceneItemId,
-            'position': { 'y': y, 'alignment': 0}
-        }).catch(() => {
-            console.log("ERROR: Invalis Position Syntax")
-            logEverywhere("ERROR: Invalid Move Y Syntax. See Help > API")
+            'sceneName': currentProgramSceneName.toString().split('_').join(' '),
+            'sceneItemId': currentSceneItem[0].sceneItemId,
+            sceneItemTransform: {
+                'positionY': y
+            }
+        }).catch(error => {
+        console.log("Couldn't get scene index")
         })
     })
     }   
@@ -1916,19 +2059,17 @@ server.on('message', (msg) => {
         logEverywhere(`OSC IN: ${msg}`)
         console.log("Scene NAme: " + data.currentProgramSceneName)
         console.log("Scene NAme: " + currentSceneItem)
-        var x = 0 + 960
-        var y = 0 + 540
+        console.log(currentSceneItem)
+        let currentProgramSceneName = data.currentProgramSceneName
+        console.log(`${currentProgramSceneName} ${currentSceneItem[0].sceneItemId}`)
         obs.call("SetSceneItemTransform", {
-            'sceneName': data.currentProgramSceneName.toString(),
-            'sceneItemId': sceneItemId,
-            'sceneItemTransform' : {
-                'positionX': x,
-                'positionY': y,
+            'sceneName': currentProgramSceneName.toString().split('_').join(' '),
+            'sceneItemId': currentSceneItem[0].sceneItemId,
+            sceneItemTransform: {
                 'alignment': msg[1]
-                }
-        }).catch(() => {
-            console.log("Error: Select A Scene Item in OBS for Alignment")
-            logEverywhere("ERROR: Invalid Alignment Syntax. See Help > API")
+            }
+        }).catch(error => {
+        console.log("Couldn't get scene index")
         })
     })
     }
@@ -1955,17 +2096,17 @@ server.on('message', (msg) => {
         return obs.call("GetCurrentProgramScene").then(data => {
         console.log(`OSC IN: ${msg}`)
         logEverywhere(`OSC IN: ${msg}`)
+        let currentProgramSceneName = data.currentProgramSceneName
+        console.log(`${currentProgramSceneName} ${currentSceneItem[0].sceneItemId}`)
         obs.call("SetSceneItemTransform", {
-            'sceneName': data.currentProgramSceneName.toString(),
-            'sceneItemId': sceneItemId,
-            'sceneItemTransform' : {
+            'sceneName': currentProgramSceneName.toString().split('_').join(' '),
+            'sceneItemId': currentSceneItem[0].sceneItemId,
+            sceneItemTransform: {
                 'scaleX': msg[1],
                 'scaleY': msg[1]
-                }
             }
-        ).catch(() => {
-            console.log("Error: Select A Scene Item in OBS for Size")
-            logEverywhere("ERROR: Invalid Size Syntax. See Help > API")
+        }).catch(error => {
+        console.log("Couldn't get scene index")
         })
     })
     }
@@ -1974,16 +2115,17 @@ server.on('message', (msg) => {
         return obs.call("GetCurrentProgramScene").then(data => {
             console.log(`OSC IN: ${msg}`)
             logEverywhere(`OSC IN: ${msg}`)
-            obs.call("SetSceneItemTransform", {
-                'sceneName': data.currentProgramSceneName.toString(),
-                'sceneItemId': sceneItemId,
-                'sceneItemTransform' : {
-                    'rotation': msg[1]
-                }
-            }).catch(() => {
-                console.log("Error: Select A Scene Item in OBS for Size")
-                logEverywhere("ERROR: Invalid Size Syntax. See Help > API")
-            })
+            let currentProgramSceneName = data.currentProgramSceneName
+        console.log(`${currentProgramSceneName} ${currentSceneItem[0].sceneItemId}`)
+        obs.call("SetSceneItemTransform", {
+            'sceneName': currentProgramSceneName.toString().split('_').join(' '),
+            'sceneItemId': currentSceneItem[0].sceneItemId,
+            sceneItemTransform: {
+                'rotation': msg[1]
+            }
+        }).catch(error => {
+        console.log("Couldn't get scene index")
+        })
         })
         }
     else if (msg[0] === '/getSceneItemTransform'){
@@ -2426,7 +2568,7 @@ obs.on('SceneTransitionStarted', data => {
         sceneNow = currentScene            
     }
     console.log(currentScene + " " + sceneNow)
-    logEverywhere(`New Active Scene: ${data['toScene']}`)
+    //logEverywhere(`New Active Scene: ${currentScene}`)
     if (enableObs2App && !isTouchOSC){
     client.send(`${oscOutPrefix}${data['toScene'].split(' ').join('_').toString()}${oscOutSuffix}`, 1, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
         if (err) console.log(err);

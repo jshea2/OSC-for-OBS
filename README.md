@@ -6,8 +6,9 @@
 ## Setup
 *Requires: [obs-websocket plugin](https://github.com/Palakis/obs-websocket/releases) v5.0 and above (This is included in OBS v28)*
 
-* NOTE:  *[Download *OSC for OBS (v2.7.1)* if you're using obs-websocket v4.9 and lower](https://github.com/jshea2/OBSosc/releases)*
+* NOTE:  *If you're using obs-websocket v4.9 and lower download [*OSC for OBS (v2.7.1)*](https://github.com/jshea2/OBSosc/releases)*
 
+## [Download OSC for OBS (v3.0) Now](https://github.com/jshea2/OSC-for-OBS/releases/tag/v3.0)
 
 <img width="350" alt="Screen Shot 2021-11-21 at 4 17 23 PM" src="https://user-images.githubusercontent.com/70780576/191876659-ebf6c5eb-40da-4725-ba50-1ac28658c377.png">
 
@@ -675,4 +676,4 @@ Use the following setup for `/[source]/audioToggle` command for a *toggle button
             alt="chat on Discord"></a>
 
            
-## [Download *OSC for OBS (v2.7.1)* Now](https://github.com/jshea2/OBSosc/releases)           
+## [Download *OSC for OBS (v3.0)* Now](https://github.com/jshea2/OSC-for-OBS/releases/tag/v3.0)           

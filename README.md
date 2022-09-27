@@ -658,6 +658,15 @@ Use the following setup for `/[source]/audioToggle` command for a *toggle button
 
 
 # Troubleshooting
+### OSC Tester
+<img width="160" alt="Screen Shot 2021-03-01 at 5 44 26 PM" src="https://user-images.githubusercontent.com/70780576/192420764-603c938e-ccbb-4344-b7a5-66228fb946c9.png">
+
+- *File > OSC Tester*
+
+- This window can help with testing OSC commands without leaving the app
+
+----------------------------------------------------------
+
 <img width="222" alt="Screen Shot 2021-03-01 at 5 44 26 PM" src="https://user-images.githubusercontent.com/70780576/109584601-b4bf3b00-7ab6-11eb-911f-e34c6e0455bf.png">
 
 - If you're getting this error on Mac after you close the app make sure you drag and drop *OSC for OBS* from *Downloads* to *Applications*

@@ -8,6 +8,9 @@
 
 * NOTE:  *If you're using obs-websocket v4.9 and lower download [*OSC for OBS (v2.7.1)*](https://github.com/jshea2/OBSosc/releases)*
 
+### Installation
+- Make sure you save the application in a folder that permissions are allowed to access such as root C:/ on PC or Applications on Mac . On quit, OSC for OBS saves a 'configuration' file that needs folder permission to save. So if you see an error on quitting or saving this could be the issue.
+
 ## [Download OSC for OBS (v3.0) Now](https://github.com/jshea2/OSC-for-OBS/releases/tag/v3.0)
 
 <img width="350" alt="Screen Shot 2021-11-21 at 4 17 23 PM" src="https://user-images.githubusercontent.com/70780576/191876659-ebf6c5eb-40da-4725-ba50-1ac28658c377.png">
@@ -661,6 +664,17 @@ Use the following setup for `/[source]/audioToggle` command for a *toggle button
 <img width="222" alt="Screen Shot 2021-03-01 at 5 44 26 PM" src="https://user-images.githubusercontent.com/70780576/109584601-b4bf3b00-7ab6-11eb-911f-e34c6e0455bf.png">
 
 - If you're getting this error on Mac after you close the app make sure you drag and drop *OSC for OBS* from *Downloads* to *Applications*
+
+# Editing The Code Yourself
+*OSC for OBS* is an Electron application that is powered by HTML, CSS, Javascript, and Node.js. You can access and edit any of these files by doing the following:
+
+### Mac 
+- Right-click on application > Show Package Contents > Contents > Resources > app > src.
+    - 'index.js' is where majority of the code is located
+
+### PC
+- In the downloaded folder > Resources > app > src
+    - 'index.js' is where majority of the code is located
 
 ## Acknowledgement
 ### This was inspired by [ObSC](https://github.com/CarloCattano/ObSC?fbclid=IwAR1zGJ_iFVq9o887hWw71lWaGZKqdAP0mMaVFyXau9x0sDgs-5KjS9HNLrk) 

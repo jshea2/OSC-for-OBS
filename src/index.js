@@ -1512,6 +1512,9 @@ server.on('message', (msg) => {
                     var tranisionTime = data["transitionDuration"]
                     console.log(`OSC IN: ${msg[0]} ${msg[1]}\nCurrent Duration: ${tranisionTime}`)
                     logEverywhere(`OSC IN: ${msg[0]}\nCurrent Duration: ${tranisionTime}`)
+                }).catch(() => {
+                    console.log("Whoops")
+                    logEverywhere(`Error: Transition Syntax Error. See Help > API`)
                 })
             } else {
             console.log(`OSC IN: ${msg[0]} ${msg[1]}`)
@@ -1522,8 +1525,12 @@ server.on('message', (msg) => {
                 'transitionName': makeSpace.toString()
             }) 
         if(msg.length === 2){
-        obs.call("SetCurrentSceneTransition", {
+            console.log("duration is working properly")
+        obs.call("SetCurrentSceneTransitionDuration", {
             'transitionDuration': msg[1]
+        }).catch(() => {
+            console.log("Whoops")
+            logEverywhere(`Error: Transition Syntax Error. See Help > API`)
         })
     } else if (msg.length === 1) {
         return

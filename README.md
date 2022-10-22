@@ -13,9 +13,12 @@
 <img width="350" alt="Screen Shot 2021-11-21 at 4 17 23 PM" src="https://user-images.githubusercontent.com/70780576/191876659-ebf6c5eb-40da-4725-ba50-1ac28658c377.png">
 
 
-- [Download *OSC for OBS*](https://github.com/jshea2/OBSosc/releases)   
+- [Download *OSC for OBS*](https://github.com/jshea2/OBSosc/releases) 
+
+-Make sure you place the application in a folder with permissions to read and write:
    - If on Mac: Place *OSC for OBS* in Applications folder
-      - If you don't you might get [this error](https://github.com/jshea2/OSC-for-OBS/blob/master/README.md#troubleshooting) on close
+   - If on PC: Place *OSC for OBS* in a root folder such as C:/
+       -  If you don't you might get [this error](https://github.com/jshea2/OSC-for-OBS/blob/master/README.md#troubleshooting) on close
 - Configure the input fields 
 - Successfully "Connect" 
 - The window will open a "DevTools" window

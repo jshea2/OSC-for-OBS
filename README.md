@@ -8,9 +8,6 @@
 
 * NOTE:  *If you're using obs-websocket v4.9 and lower download [*OSC for OBS (v2.7.1)*](https://github.com/jshea2/OBSosc/releases)*
 
-### Installation
-- Make sure you save the application in a folder that permissions are allowed to access such as root C:/ on PC or Applications on Mac . On quit, OSC for OBS saves a 'configuration' file that needs folder permission to save. So if you see an error on quitting or saving this could be the issue.
-
 ## [Download OSC for OBS (v3.0) Now](https://github.com/jshea2/OSC-for-OBS/releases/tag/v3.0)
 
 <img width="350" alt="Screen Shot 2021-11-21 at 4 17 23 PM" src="https://user-images.githubusercontent.com/70780576/191876659-ebf6c5eb-40da-4725-ba50-1ac28658c377.png">
@@ -661,6 +658,15 @@ Use the following setup for `/[source]/audioToggle` command for a *toggle button
 
 
 # Troubleshooting
+### OSC Tester
+<img width="160" alt="Screen Shot 2021-03-01 at 5 44 26 PM" src="https://user-images.githubusercontent.com/70780576/192420764-603c938e-ccbb-4344-b7a5-66228fb946c9.png">
+
+- *File > OSC Tester*
+
+- This window can help with testing OSC commands without leaving the app
+
+----------------------------------------------------------
+
 <img width="222" alt="Screen Shot 2021-03-01 at 5 44 26 PM" src="https://user-images.githubusercontent.com/70780576/109584601-b4bf3b00-7ab6-11eb-911f-e34c6e0455bf.png">
 
 - If you're getting this error on Mac after you close the app make sure you drag and drop *OSC for OBS* from *Downloads* to *Applications*
@@ -690,4 +696,4 @@ Use the following setup for `/[source]/audioToggle` command for a *toggle button
             alt="chat on Discord"></a>
 
            
-## [Download *OSC for OBS (v3.0)* Now](https://github.com/jshea2/OSC-for-OBS/releases/tag/v3.0)           
+## [Download *OSC for OBS (v3.1)* Now](https://github.com/jshea2/OSC-for-OBS/releases/tag/v3.0)           

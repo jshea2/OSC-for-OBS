@@ -1324,8 +1324,12 @@ server.on('message', (msg) => {
         logEverywhere(`OSC IN: ${msg}`)
         var msgArray = msg[0].split("/")
         msgArray.shift()
-        getSceneItemId(msgArray[0].split('_').join(' ').toString(), msgArray[1].split('_').join(' ').toString())
-        var visible;
+        obs.call("GetSceneItemId", {
+            sceneName: msgArray[0].split('_').join(' ').toString(),
+            sourceName: msgArray[1].split('_').join(' ').toString()
+        }).then(data => {
+            console.log(data)
+            var visible;
         if(msg[1] === 0 || msg[1] === 'off' || msg[1] === '0' || msg[1] === 'false'){
             visible = false
         } else if(msg[1] === 1 || msg[1] === 'on' || msg[1] === '1' || msg[1] === 'true'){
@@ -1333,13 +1337,16 @@ server.on('message', (msg) => {
         }
         obs.call("SetSceneItemEnabled", {
             'sceneName': msgArray[0].split('_').join(' ').toString(),
-            'sceneItemId': getSceneItemIdValue,
+            'sceneItemId': data.sceneItemId,
             'sceneItemEnabled': visible,
         }).catch(() => {
             console.log("Error: Invalid Syntax. Make Sure There Are NO SPACES in Scene Name and Source Name. /[Scene Name]/[Source Name]/visible 0 or 1, example: /Wide/VOX/visible 1")
             logEverywhere(`Error: Invalid Syntax. Make Sure There Are NO SPACES in Scene Name and Source Name. /[Scene Name]/[Source Name]/visible 0 or 1, example: /Wide/VOX/visible 1\nOSC Recieved: ${msg}`)
 
         })
+        })
+        //getSceneItemId(msgArray[0].split('_').join(' ').toString(), msgArray[1].split('_').join(' ').toString())
+        
     } 
     //Triggers Filter Visibility On/Off
     else if (msg[0].includes('filterVisibility')){

@@ -2566,7 +2566,9 @@ server.on('message', (msg) => {
 });
 
 //OBS -> OSC Client (OUT)
-obs.on('SceneTransitionStarted', data => {
+obs.on('CurrentProgramSceneChanged', data => {
+
+    
 
     obs.call('GetCurrentProgramScene').then(data => {
         currentScene = data.currentProgramSceneName
@@ -2577,85 +2579,107 @@ obs.on('SceneTransitionStarted', data => {
     } else if(enableObs2App === "true"){
         enableObs2App = true
     }
-    sceneNow = data['fromScene']
-    if (!data['fromScene']){
-        sceneNow = currentScene            
-    }
-    console.log(currentScene + " " + sceneNow)
+    //sceneNow = data['fromScene']
+    // if (!data['fromScene']){
+    //     sceneNow = currentScene            
+    // }
+    //console.log(currentScene + " " + sceneNow)
     //logEverywhere(`New Active Scene: ${currentScene}`)
     if (enableObs2App && !isTouchOSC){
-    client.send(`${oscOutPrefix}${data['toScene'].split(' ').join('_').toString()}${oscOutSuffix}`, 1, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+    client.send(`${oscOutPrefix}${data.sceneName.split(' ').join('_').toString()}${oscOutSuffix}`, 1, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
         if (err) console.log(err);
             });
     } else if (enableObs2App && isTouchOSC){
 
         //Update TouchOSC Scenes
+        for (let i = 0; i < 50; i++){
+            client.send(`/item/${i}/visibility`, 0, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                if (err) console.log(err);
+                    })
+            client.send(`/item/${i}/name`, "-", (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                if (err) console.log(err);
+                    })
+        }
+
         let sceneArray = []
         let visibleArray = []
         obs.call("GetCurrentProgramScene").then(data => {
             currentScene = data.currentProgramSceneName
             obs.call("GetSceneItemList", {
-                sceneName: data.currentProgramSceneName
+                sceneName: currentScene
             }).then(data => {
+                console.log(data.sceneItems)
                 data.sceneItems.forEach(e => {
-                    sceneArray.push(e['sceneItems'].toString())
+                    sceneArray.push(e['sourceName'].toString())
                 })
             })
             .then(() => {
                 sceneArray.reverse()
+                console.log("testing testing")
                 console.log(sceneArray)
                 sceneArray.forEach((element, index) => {
                     let currentVisible
-                    obs.call('GetSceneItemEnabled', {
-                        sceneitem: `${element}`
+                    obs.call('GetSceneItemId', {
+                        sceneName: currentScene,
+                        sourceName: `${element}`
+                    }).then(data => {
+                        console.log("testingagain")
+                        let currentSceneItemId = data.sceneItemId
+                        obs.call('GetSceneItemEnabled', {
+                            sceneName: currentScene,
+                            sceneItemId: currentSceneItemId
+                        })
+                        .then(data => {
+                            console.log("testingagain22222")
+                            console.log(data.sceneItemEnabled)
+                            currentVisible = data.sceneItemEnabled
+                            if (currentVisible == true){
+                                currentVisible = 1
+                            } else if (currentVisible == false){
+                                currentVisible = 0
+                            }
+                        })
+                        .then(() => {
+                            visibleArray.push(currentVisible)
+                            //console.log(visibleArray)
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
+        
+                        setTimeout(() => {
+                            client.send(`/item/${index}/visibility`, currentVisible, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                                if (err) console.log(err);
+                                    })
+                            client.send(`/item/${index}/name`, element, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                                if (err) console.log(err);
+                                    })
+                        }, 200);
+
+                        // client.send(`/activeScene`, data.currentProgramSceneName, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                        //     if (err) console.log(err);
+                        //         });
+                        // client.send(`/scene/${sceneNow.split(' ').join('_').toString()}`, 0, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                        //     if (err) console.log(err);
+                        //         });
+                        // client.send(`/scene/${data['toScene'].split(' ').join('_').toString()}`, 1, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                        //     if (err) console.log(err);
+                        //         });
+                
+                        obs.call('GetCurrentSceneTransition').then(data => {
+                            console.log("transitionyoooooo")
+                            client.send(`/transitionType`, data.transitionName, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                                if (err) console.log(err);
+                                    }) 
+                            client.send(`/transitionDuration`, data.transitionDuration, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                                if (err) console.log(err);
+                                    })
+                            })
                     })
-                    .then(data => {
-                        console.log(data.visible)
-                        currentVisible = data.visible
-                        if (currentVisible == true){
-                            currentVisible = 1
-                        } else if (currentVisible == false){
-                            currentVisible = 0
-                        }
-                    })
-                    .then(() => {
-                        visibleArray.push(currentVisible)
-                        //console.log(visibleArray)
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                    })
-    
-                    setTimeout(() => {
-                        client.send(`/item/${index}/visibility`, currentVisible, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
-                            if (err) console.log(err);
-                                })
-                        client.send(`/item/${index}/name`, element, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
-                            if (err) console.log(err);
-                                })
-                    }, 200);
-    
                 })
             })
         })
-        
-
-        client.send(`/activeScene`, data['toScene'].toString(), (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
-            if (err) console.log(err);
-                });
-        client.send(`/scene/${sceneNow.split(' ').join('_').toString()}`, 0, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
-            if (err) console.log(err);
-                });
-        client.send(`/scene/${data['toScene'].split(' ').join('_').toString()}`, 1, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
-            if (err) console.log(err);
-                });
-        client.send(`/transitionType`, data.type, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
-            if (err) console.log(err);
-                }) 
-        client.send(`/transitionDuration`, data.duration, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
-            if (err) console.log(err);
-                })
-        }
+    }
     })
 
     if(enableObs2App && isTouchOSC){
@@ -2737,49 +2761,84 @@ obs.on('SceneTransitionStarted', data => {
                 console.log(err)
             })
             //Update TouchOSC Scenes
-            let sceneArray = []
-            let visibleArray = []
-            obs.call("GetSceneItemList").then(data => {
+        let sceneArray = []
+        let visibleArray = []
+        obs.call("GetCurrentProgramScene").then(data => {
+            currentScene = data.currentProgramSceneName
+            obs.call("GetSceneItemList", {
+                sceneName: currentScene
+            }).then(data => {
+                console.log(data.sceneItems)
                 data.sceneItems.forEach(e => {
                     sceneArray.push(e['sourceName'].toString())
                 })
             })
             .then(() => {
                 sceneArray.reverse()
+                console.log("testing testing")
                 console.log(sceneArray)
                 sceneArray.forEach((element, index) => {
                     let currentVisible
-                    obs.call('GetSceneItemEnabled', {
-                        item: `${element}`
-                    })
-                    .then(data => {
-                        console.log(data.visible)
-                        currentVisible = data.visible
-                        if (currentVisible == true){
-                            currentVisible = 1
-                        } else if (currentVisible == false){
-                            currentVisible = 0
-                        }
-                    })
-                    .then(() => {
-                        visibleArray.push(currentVisible)
-                        //console.log(visibleArray)
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                    })
+                    obs.call('GetSceneItemId', {
+                        sceneName: currentScene,
+                        sourceName: `${element}`
+                    }).then(data => {
+                        console.log("testingagain")
+                        let currentSceneItemId = data.sceneItemId
+                        obs.call('GetSceneItemEnabled', {
+                            sceneName: currentScene,
+                            sceneItemId: currentSceneItemId
+                        })
+                        .then(data => {
+                            console.log("testingagain22222")
+                            console.log(data.sceneItemEnabled)
+                            currentVisible = data.sceneItemEnabled
+                            if (currentVisible == true){
+                                currentVisible = 1
+                            } else if (currentVisible == false){
+                                currentVisible = 0
+                            }
+                        })
+                        .then(() => {
+                            visibleArray.push(currentVisible)
+                            //console.log(visibleArray)
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
+        
+                        setTimeout(() => {
+                            client.send(`/item/${index}/visibility`, currentVisible, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                                if (err) console.log(err);
+                                    })
+                            client.send(`/item/${index}/name`, element, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                                if (err) console.log(err);
+                                    })
+                        }, 200);
 
-                    setTimeout(() => {
-                        client.send(`/item/${index}/visibility`, currentVisible, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
-                            if (err) console.log(err);
-                                })
-                        client.send(`/item/${index}/name`, element, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
-                            if (err) console.log(err);
-                                })
-                    }, 200);
-
+                        // client.send(`/activeScene`, data.currentProgramSceneName, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                        //     if (err) console.log(err);
+                        //         });
+                        // client.send(`/scene/${sceneNow.split(' ').join('_').toString()}`, 0, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                        //     if (err) console.log(err);
+                        //         });
+                        // client.send(`/scene/${data['toScene'].split(' ').join('_').toString()}`, 1, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                        //     if (err) console.log(err);
+                        //         });
+                
+                        obs.call('GetCurrentSceneTransition').then(data => {
+                            console.log("transitionyoooooo")
+                            client.send(`/transitionType`, data.transitionName, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                                if (err) console.log(err);
+                                    }) 
+                            client.send(`/transitionDuration`, data.transitionDuration, (err) => {  //Takes OBS Scene Name and Sends it Out as OSC String (Along with Prefix and Suffix)
+                                if (err) console.log(err);
+                                    })
+                            })
+                    })
                 })
             })
+        })
             })
 
         obs.on('SourceOrderChanged', () => {

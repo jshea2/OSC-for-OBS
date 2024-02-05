@@ -1498,6 +1498,23 @@ server.on('message', (msg) => {
         })  
     }
 
+    //Updates RenderDelay
+    else if (msg[0].includes('renderDelay')){
+        console.log(`OSC IN: ${msg[0]} ${msg[1]}`)
+        logEverywhere(`OSC IN: ${msg[0]} ${msg[1]}`)
+        var msgArray = msg[0].split("/")
+        msgArray.shift()
+        obs.call("SetSourceFilterSettings", {
+            'sourceName': msgArray[0].split('_').join(' '),
+            'filterName': msgArray[1].split('_').join(' '),
+            'filterSettings': {'delay_ms' : parseInt(msg[1])}
+         }).catch(() => {
+             console.log("ERROR: RenderDelay Command Syntax is Incorrect. Refer to Node OBSosc Github for Reference")
+             logEverywhere(`ERROR: RenderDelay Command Syntax is Incorrect. Refer to Node OBSosc Github for Reference\nOSC Recieved: ${msg}`)
+ 
+         })  
+    }
+
     //Set Transition Type and Duration
     else if (msg[0].includes('/transition')){
             console.log(`OSC IN: ${msg}`)

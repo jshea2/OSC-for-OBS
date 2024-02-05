@@ -138,21 +138,21 @@ Value `0` to `1`
 ### Gamma
 **`/[source_name]/[color_correction_filter_name]/gamma [-3 thru 3]`** 
 - Adjust the Gamma of a source via the "Color Correction" filter in OBS of the current scene.
-  - `0` is the default vaule
+  - `0` is the default value
   - *Example:* `/Text_1/Color_Correction/gamma 3` will make "Text 1" gamma at highest setting. 
   - *Note:* If a source name or filter name contains a SPACE, replace with "_", so if OBS has a source "Text 1" and filter "Color Correction" make OSC message the example from above)
 
 ### Contrast
 **`/[source_name]/[color_correction_filter_name]/contrast [-2 thru 2]`** 
 - Adjust the Contrast of a source via the "Color Correction" filter in OBS of the current scene.
-  -  `0` is the default vaule
+  -  `0` is the default value
   - *Example:* `/Text_1/Color_Correction/contrast 2` will make "Text 1" contrast at highest setting. 
   - *Note:* If a source name or filter name contains a SPACE, replace with "_", so if OBS has a source "Text 1" and filter "Color Correction" make OSC message the example from above)
 
 ### Brightness
 **`/[source_name]/[color_correction_filter_name]/brightness [-1 thru 1]`** 
 - Adjust the Brightness of a source via the "Color Correction" filter in OBS of the current scene.
-  - `0` is the default vaule
+  - `0` is the default value
   - *Example:* `/Text_1/Color_Correction/brightness 1` will make "Text 1" brightness at highest setting. 
   - *Note:* If a source name or filter name contains a SPACE, replace with "_", so if OBS has a source "Text 1" and filter "Color Correction" make OSC message the example from above)
 
@@ -160,15 +160,21 @@ Value `0` to `1`
 ### Saturation
 **`/[source_name]/[color_correction_filter_name]/saturation [-1 thru 5]`** 
 - Adjust the Contrast of a source via the "Color Correction" filter in OBS of the current scene.
-  - `0` is the default vaule
+  - `0` is the default value
   - *Example:* `/Text_1/Color_Correction/contrast 5` will make "Text 1" saturation at highest setting. 
   - *Note:* If a source name or filter name contains a SPACE, replace with "_", so if OBS has a source "Text 1" and filter "Color Correction" make OSC message the example from above)
 
 ### Hue Shift
 **`/[source_name]/[color_correction_filter_name]/hueShift [-180 thru 180]`** 
 - Adjust the Contrast of a source via the "Color Correction" filter in OBS of the current scene.
-  - `0` is the default vaule
+  - `0` is the default value
   - *Example:* `/Text_1/Color_Correction/contrast 180` will make "Text 1" hue shift at highest setting. 
+  - *Note:* If a source name or filter name contains a SPACE, replace with "_", so if OBS has a source "Text 1" and filter "Color Correction" make OSC message the example from above)
+
+### Render Delay
+**`/[source_name]/[render_delay_filter_name]/renderDelay [delay in ms]`** 
+- Adjust the Render Delay of a source via the "Render Delay" filter in OBS of the current scene.
+  - *Example:* `/Video_Delayed/Render_Delay/renderDelay 100` will make "Video Delayed" have a render delay of 100 milliseconds 
   - *Note:* If a source name or filter name contains a SPACE, replace with "_", so if OBS has a source "Text 1" and filter "Color Correction" make OSC message the example from above)
 
 #

@@ -398,7 +398,16 @@ Value `0` to `1`
 ***`/setProfile [Profile Name]`**
 - set the profile with the specified name
 
+### Set Recording File Path
+***`/recFilePath [File Path]`**
+- set the profile with the specified name
 #
+
+### Set Recording File Name
+***`/recFileName [File Name]`**
+- set the profile with the specified name
+#
+
 ## **- NDI and Other Outputs -**
 #
 

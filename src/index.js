@@ -1941,14 +1941,31 @@ server.on('message', (msg) => {
             logEverywhere("ERROR: Invalid) Refresh Browser Syntax. See Help > API")
         })
     }
-    //Set Recording File Name (Depricated)
-    // else if (msg[0] === "/recFileName"){
-    //     obs.call("SetFilenameFormatting", {
-    //         'filename-formatting': msg[1].toString()
-    //     }).catch(() => {
-    //         logEverywhere("ERROR: Invalid) Refresh Browser Syntax. See Help > API")
-    //     })
-    // }
+    //Set Recording File Path
+    else if (msg[0] === "/recFilePath"){
+        console.log(`OSC IN: ${msg}`)
+        logEverywhere(`OSC IN: ${msg}`)
+        obs.call("SetProfileParameter", {
+            'parameterCategory': 'SimpleOutput',
+            'parameterName': 'FilePath',
+            'parameterValue': msg[1].toString()
+        }).catch(() => {
+            logEverywhere("ERROR: Invalid Recording File Path Syntax. See Help > API")
+        })
+    }
+
+    //Set Recording File Name
+    else if (msg[0] === "/recFileName"){
+        console.log(`OSC IN: ${msg}`)
+        logEverywhere(`OSC IN: ${msg}`)
+        obs.call("SetProfileParameter", {
+            'parameterCategory': 'Output',
+            'parameterName': 'FilenameFormatting',
+            'parameterValue': msg[1].toString()
+        }).catch(() => {
+            logEverywhere("ERROR: Invalid Recording File Name Syntax. See Help > API")
+        })
+    }
 
     // ----- TouchOSC COMMANDS: ------
 

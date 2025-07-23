@@ -71,7 +71,7 @@
   },
   "devDependencies": {
     "create-electron-app": "^1.0.0",
-    "electron": "^11.0.3",
+    "electron": "^37.2.4",
     "electron-packager": "^15.1.0"
   }
 }
